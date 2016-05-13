@@ -8,6 +8,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
+    preLoaders: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'jscs-loader' }
+    ],
     loaders: [
       { test: /\.vue$/, loader: 'vue' },
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
