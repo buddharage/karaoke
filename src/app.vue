@@ -1,17 +1,16 @@
 <template>
   <div class="main">
-    <input type="text" v-model="text" />
-    <div class="hello">Hello {{ text }}!</div>
+    <nav>
+      <a v-link="'/thai'">Thai</a>
+      <a v-link="'/lydia'">Lydia</a>
+    </nav>
+
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
   export default {
-    replace: false,
-  	data() {
-      return {
-        text: 'vue'
-      }
-    }
+    replace: false
   }
 </script>

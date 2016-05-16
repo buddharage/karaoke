@@ -1,14 +1,9 @@
-import Vue from 'vue'
-import app from './app.vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import app from './app.vue';
+import router from './routes';
 
-import './styles.css'
+Vue.config.debug = process.env.NODE_ENV !== 'production';
 
-Vue.config.debug = process.env.NODE_ENV !== 'production'
+const App = Vue.extend(app);
 
-Vue.use(VueRouter)
-
-const router = new VueRouter()
-const App = Vue.extend(app)
-
-router.start(App, 'body')
+router.start(App, 'body');
