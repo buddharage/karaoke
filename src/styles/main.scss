@@ -21,6 +21,7 @@ $roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
 @import "components/navbar";
 @import "components/roboto";
 @import "components/typography";
+/**
 @import "components/cards";
 @import "components/toast";
 @import "components/tabs";
@@ -41,3 +42,4 @@ $roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
 @import "components/date_picker/default";
 @import "components/date_picker/default.date";
 @import "components/date_picker/default.time";
+**/
