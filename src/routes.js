@@ -1,12 +1,18 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
+
+// Components
+import queue from './components/queue.vue';
+import search from './components/search.vue';
 
 Vue.use(VueRouter);
 
-const router = new VueRouter()
+const router = new VueRouter();
 
 // Redirects
-router.redirect({});
+router.redirect({
+  '/queue': '/'
+});
 
 
 // Map routes
@@ -16,16 +22,8 @@ router.map({
       template: '<h1>Route not found</h1>'
     }
   },
-  '/': {
-    component: {
-      template: 'Project Title'
-    }
-  },
-  '/thai': {
-    component: {
-      template: '<h1>Thai</h1>'
-    }
-  }
+  '/': {component: queue},
+  '/search': {component: search},
 });
 
 export default router;
