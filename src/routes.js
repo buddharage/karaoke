@@ -16,6 +16,11 @@ router.map({
       template: '<h1>Route not found</h1>'
     }
   },
+  '/': {
+    component: {
+      template: 'Project Title'
+    }
+  },
   '/thai': {
     component: {
       template: '<h1>Thai</h1>'

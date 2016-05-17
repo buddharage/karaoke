@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
   entry: {
     app: './src/main.js'
@@ -20,7 +22,14 @@ module.exports = {
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
-      { test: /\.css$/, loader: 'style-loader!css-loader' }
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.scss$/, loaders: ['style', 'css', 'sass'] }
+    ]
+  },
+  sassLoader: {
+    includePaths: [
+      path.resolve(__dirname, "./node_modules/materialize-css/sass"),
+      path.resolve(__dirname, "./src/styles")
     ]
   },
   devtool: '#source-map'
