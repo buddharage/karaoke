@@ -11,7 +11,7 @@ const router = new VueRouter();
 
 // Redirects
 router.redirect({
-  '/queue': '/'
+  '/': '/queue'
 });
 
 
@@ -22,7 +22,7 @@ router.map({
       template: '<h1>Route not found</h1>'
     }
   },
-  '/': {component: queue},
+  '/queue': {component: queue},
   '/search': {component: search},
 });
 

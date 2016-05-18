@@ -1,5 +1,11 @@
 <template>
-  <a v-link="'/queue'" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">list</i></a>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
+      style="bottom: 2rem; right: 2rem;"
+      v-link="'/'">
+      <i class="material-icons">list</i>
+    </a>
+  </div>
 
   <form v-on:submit.prevent="searchYT">
     <div class="input-field">
@@ -7,11 +13,18 @@
     </div>
   </form>
 
-  <ul class="collection">
-    <li class="collection-item" v-for="video in videos">
-        {{ video.snippet.title }}
-    </li>
-  </ul>
+  <div class="search-results row">
+    <div class="card small col s12 m6 l4"
+      v-for="video in videosResult"
+      v-on:click.prevent="addToQueue(video)">
+        <div class="card-image">
+          <img v-bind:src="video.snippet.thumbnails.high.url">
+        </div>
+        <div class="card-content">
+          <span class="card-title">{{ video.snippet.title }}</span>
+        </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -19,23 +32,32 @@
   import Firebase from 'firebase';
   import api from 'youtube-api-simple';
 
-  // Set Firebase collection
-  var playlistRef = new Firebase(config.firebaseURL + '/room/queue');
-
   // Set Youtube API object
   var youtube = api({
     api: config.googleKey,
     uri: 'https://www.googleapis.com/youtube/v3/'
   });
 
+  var queueRef = new Firebase(config.firebaseURL + '/room/queue');
+
   export default {
     data() {
       return {
         query: '',
-        videos: []
+        videosResult: []
       }
     },
     methods: {
+      addToQueue(video) {
+        if(!video) {
+          return;
+        }
+
+        queueRef.push({
+          id: video.id.videoId,
+          title: video.snippet.title
+        });
+      },
       /**
        * searchYT uses Google API to get a list of videos
        * @return {Object}   List of videos
@@ -51,7 +73,9 @@
 
           data = JSON.parse(data);
 
-          this.videos = data.items;
+          console.log(data);
+
+          this.videosResult = data.items;
         });
       }
     }
