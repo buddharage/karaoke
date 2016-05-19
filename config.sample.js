@@ -1,4 +1,9 @@
 export default {
   googleKey: '',
-  firebaseURL: ''
+  firebase: {
+    apiKey: '',
+    authDomain: '',
+    databaseURL: '',
+    storageBucket: ''
+  }
 }

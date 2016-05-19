@@ -14,7 +14,7 @@
   </form>
 
   <div class="search-results row">
-    <div class="card small col s12 m6 l4"
+    <div class="card small activator col s12 m6 l4"
       v-for="video in videosResult"
       v-on:click.prevent="addToQueue(video)">
         <div class="card-image">
@@ -29,7 +29,6 @@
 
 <script>
   import config from '../../config';
-  import Firebase from 'firebase';
   import api from 'youtube-api-simple';
 
   // Set Youtube API object
@@ -38,9 +37,10 @@
     uri: 'https://www.googleapis.com/youtube/v3/'
   });
 
-  var queueRef = new Firebase(config.firebaseURL + '/room/queue');
-
   export default {
+    props: [
+      'firebaseRef'
+    ],
     data() {
       return {
         query: '',
@@ -48,15 +48,26 @@
       }
     },
     methods: {
+      /**
+       * addToQueue() adds video to Firebase database
+       * in the 'queue' table
+       * @param {Object}  video
+       */
       addToQueue(video) {
         if(!video) {
           return;
         }
 
-        queueRef.push({
-          id: video.id.videoId,
-          title: video.snippet.title
-        });
+        this.firebaseRef.database().ref('queue').push({
+          performer: 'Thai',
+          song: {
+            id: video.id.videoId,
+            title: video.snippet.title
+          }
+        }).then(() =>
+          // Redirect to queue view
+          this.$route.router.go({name: 'queue'})
+        );
       },
       /**
        * searchYT uses Google API to get a list of videos
@@ -71,11 +82,9 @@
             return;
           }
 
-          data = JSON.parse(data);
-
-          console.log(data);
-
-          this.videosResult = data.items;
+          // Parse search results
+          // and show in Vue
+          this.videosResult = JSON.parse(data).items;
         });
       }
     }

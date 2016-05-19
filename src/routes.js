@@ -22,8 +22,8 @@ router.map({
       template: '<h1>Route not found</h1>'
     }
   },
-  '/queue': {component: queue},
-  '/search': {component: search},
+  '/queue': {name: 'queue', component: queue},
+  '/search': {name: 'search', component: search},
 });
 
 export default router;
