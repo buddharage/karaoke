@@ -31,10 +31,12 @@
     "url-loader": "^0.5.7",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
-    "vue-loader": "^8.3.1",
+    "vue-loader": "^8.4.0",
+    "vue-style-loader": "^1.0.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1",
-    "youtube-api-simple": "^0.2.2"
+    "youtube-api-simple": "^0.2.2",
+    "youtube-iframe": "^1.0.2"
   },
   "peerDependencies": {}
 }
