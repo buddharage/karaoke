@@ -1,3 +1,5 @@
+import log from '../helpers/log';
+
 var Vue // late binding
 
 /**
@@ -89,13 +91,11 @@ function bindAsArray (vm, key, source, cancelCallback) {
   var array = [];
   vm.$set(key, array);
 
-  if(process.env.NODE_ENV !== 'production') {
-    console.log('%c ==== BINDING VALUES ====', 'color: red');
-    console.log('%c key', 'color: coral', key);
-    console.log('%c array', 'color: coral', array);
-    console.log('%c source', 'color: coral', source);
-    console.log('%c ==== END BINDING VALUES ====', 'color: red');
-  }
+  log('%c ==== [FIREBASE] ====', 'color: red');
+  log('%c key', 'color: coral', key);
+  log('%c array', 'color: coral', array);
+  log('%c source', 'color: coral', source);
+  log('%c ====================', 'color: red');
 
   var onAdd = source.on('child_added', (snapshot) => {
     array.push(createRecord(snapshot));
@@ -141,7 +141,6 @@ function bindAsObject (vm, key, source, cancelCallback) {
  * @param {string} key
  */
 function unbind(vm, key) {
-  console.log('%c firebaseSources', 'color: coral', vm._firebaseSources);
   var source = vm._firebaseSources && vm._firebaseSources[key];
   if (!source) {
     throw new Error(

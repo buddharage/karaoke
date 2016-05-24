@@ -8,7 +8,7 @@
   </div>
 
   <ul v-if="videos.length" class="collection">
-    <li v-for="video in videos" track-by="key" class="collection-item">
+    <li v-for="video in videos" track-by=".key" class="collection-item">
         {{ video.song.title }}
     </li>
   </ul>
@@ -21,6 +21,7 @@
 
 <script>
   import firebaseMixin from '../mixins/firebase';
+  import log from '../helpers/log';
 
   export default {
     props: [
@@ -36,7 +37,7 @@
     },
     ready() {
       // Check how many videos we have
-      setTimeout(() => console.log('%c videos in queue', 'color: coral', this.videos), 1200);
+      setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 1200);
     }
   }
 </script>
