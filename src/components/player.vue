@@ -30,11 +30,6 @@
     },
     methods: {
       /**
-       * setFirebaseEvents sets collection events and binds to Vue methods
-       */
-      setFirebaseEvents() {
-      },
-      /**
        * Set Firebase references and any variables related to Firebase
        */
       setFirebaseValues() {

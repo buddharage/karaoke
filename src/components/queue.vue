@@ -1,4 +1,6 @@
 <template>
+  <controls></controls>
+
   <div class="fixed-action-btn">
     <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
       style="bottom: 2rem; right: 2rem;"
@@ -20,6 +22,7 @@
 </template>
 
 <script>
+  import controls from './controls.vue';
   import firebaseMixin from '../mixins/firebase';
   import log from '../helpers/log';
 
@@ -27,6 +30,9 @@
     props: [
       'firebaseRef'
     ],
+    components: {
+      'controls': controls
+    },
     mixins: [firebaseMixin],
     data() {
       return {
