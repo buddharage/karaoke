@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 // Components
 import queue from './components/queue.vue';
 import search from './components/search.vue';
+import player from './components/player.vue';
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,7 @@ router.map({
   },
   '/queue': {name: 'queue', component: queue},
   '/search': {name: 'search', component: search},
+  '/player': {name: 'player', component: player},
 });
 
 export default router;
