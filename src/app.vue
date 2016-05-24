@@ -1,5 +1,5 @@
 <template>
-  <div class="main container">
+  <div class="main">
     <router-view :firebase-ref="firebaseRef"></router-view>
   </div>
 </template>
