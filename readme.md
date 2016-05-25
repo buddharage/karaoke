@@ -10,6 +10,8 @@ To run development, run `npm run dev`
 
 To build, run `npm run build`
 
+VueJS object properties are always in alphabetical order with the exception of `methods` which is always last.
+
 ## Usage
 
 ### For singers

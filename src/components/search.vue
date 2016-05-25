@@ -38,15 +38,15 @@
   });
 
   export default {
-    props: [
-      'firebaseRef'
-    ],
     data() {
       return {
         query: '',
         videosResult: []
       }
     },
+    props: [
+      'firebaseRef'
+    ],
     methods: {
       /**
        * addToQueue() adds video to Firebase database

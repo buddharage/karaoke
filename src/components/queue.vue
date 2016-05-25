@@ -1,5 +1,5 @@
 <template>
-  <controls></controls>
+  <controls v-if="videos.length" :firebase-ref="firebaseRef"></controls>
 
   <div class="fixed-action-btn">
     <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
@@ -9,13 +9,13 @@
     </a>
   </div>
 
-  <ul v-if="videos.length" class="collection">
+  <ul v-if="videos && videos.length" class="collection">
     <li v-for="video in videos" track-by=".key" class="collection-item">
         {{ video.song.title }}
     </li>
   </ul>
 
-  <div class="no-songs center" v-if="!videos.length">
+  <div v-else class="no-songs center">
     <p>No videos are in queue.<p>
     <a class="btn" v-link="'/search'">Let's do this!</a>
   </div>
@@ -27,13 +27,6 @@
   import log from '../helpers/log';
 
   export default {
-    props: [
-      'firebaseRef'
-    ],
-    components: {
-      'controls': controls
-    },
-    mixins: [firebaseMixin],
     data() {
       return {
         videos: {
@@ -41,6 +34,15 @@
         }
       }
     },
+    components: {
+      'controls': controls
+    },
+    mixins: [
+      firebaseMixin
+    ],
+    props: [
+      'firebaseRef'
+    ],
     ready() {
       // Check how many videos we have
       setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 1200);
