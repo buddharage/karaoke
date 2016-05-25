@@ -171,11 +171,13 @@
           }
 
           // Update Firebase with player position
-          this.videoTimer = setInterval(() => {
-            this.db.ref().update({
-              videoPosition: parseInt(this.player.getCurrentTime(), 10)}
-            );
-          },1000);
+          setTimeout(() => {
+            this.videoTimer = setInterval(() => {
+              this.db.ref().update({
+                videoPosition: parseInt(this.player.getCurrentTime(), 10)}
+              );
+            },1000);
+          }, 100);
         });
       },
     }
