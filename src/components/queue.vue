@@ -1,5 +1,9 @@
 <template>
-  <controls v-if="videos.length" :firebase-ref="firebaseRef"></controls>
+  <controls v-if="videos.length"
+    :db="db"
+    :firebase-ref="firebaseRef"
+    :videos="videos"
+    ></controls>
 
   <div class="fixed-action-btn">
     <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
@@ -10,7 +14,7 @@
   </div>
 
   <ul v-if="videos && videos.length" class="collection">
-    <li v-for="video in videos" track-by=".key" class="collection-item">
+    <li v-for="video in videos" track-by="key" class="collection-item">
         {{ video.song.title }}
     </li>
   </ul>
@@ -23,25 +27,16 @@
 
 <script>
   import controls from './controls.vue';
-  import firebaseMixin from '../mixins/firebase';
   import log from '../helpers/log';
 
   export default {
-    data() {
-      return {
-        videos: {
-          source: this.firebaseRef.database().ref('queue')
-        }
-      }
-    },
     components: {
       'controls': controls
     },
-    mixins: [
-      firebaseMixin
-    ],
     props: [
-      'firebaseRef'
+      'db',
+      'firebaseRef',
+      'videos'
     ],
     ready() {
       // Check how many videos we have

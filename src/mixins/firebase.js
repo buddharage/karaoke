@@ -1,5 +1,3 @@
-import log from '../helpers/log';
-
 var Vue // late binding
 
 /**
@@ -23,7 +21,7 @@ function createRecord(snapshot) {
   var res = isObject(value)
     ? value
     : { '.value': value };
-  res['.key'] = snapshot.key;
+  res['key'] = snapshot.key;
   return res;
 }
 
@@ -36,7 +34,7 @@ function createRecord(snapshot) {
  */
 function indexForKey(array, key) {
   for(var i = 0; i < array.length; i++) {
-    if (array[i]['.key'] === key) {
+    if (array[i]['key'] === key) {
       return i;
     }
   }
@@ -90,12 +88,6 @@ function bind(vm, key, source) {
 function bindAsArray (vm, key, source, cancelCallback) {
   var array = [];
   vm.$set(key, array);
-
-  log('%c ==== [FIREBASE] ====', 'color: red');
-  log('%c key', 'color: coral', key);
-  log('%c array', 'color: coral', array);
-  log('%c source', 'color: coral', source);
-  log('%c ====================', 'color: red');
 
   var onAdd = source.on('child_added', (snapshot) => {
     array.push(createRecord(snapshot));

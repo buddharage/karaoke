@@ -16,18 +16,18 @@
 </template>
 
 <script>
-  import firebaseMixin from '../mixins/firebase';
   import log from '../helpers/log';
 
   export default {
     data() {
       return {
-        db: this.firebaseRef.database(),
         isPlaying: false
       }
     },
     props: [
-      'firebaseRef'
+      'db',
+      'firebaseRef',
+      'videos'
     ],
     ready() {
       // Set playback status
@@ -35,10 +35,10 @@
           this.isPlaying = snapshot.val();
       });
     },
-    mixins: [firebaseMixin],
     methods: {
       replayVideo() {
-
+        // Update Firebase with playback status
+        this.db.ref().update({videoPosition: 0});
       },
       skipVideo() {
         this.db.ref('queue').once('value').then((snapshot) => {

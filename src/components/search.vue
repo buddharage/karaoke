@@ -28,8 +28,9 @@
 </template>
 
 <script>
-  import config from '../../config';
   import api from 'youtube-api-simple';
+  import config from '../../config';
+  import log from '../helpers/log';
 
   // Set Youtube API object
   var youtube = api({
@@ -45,8 +46,13 @@
       }
     },
     props: [
-      'firebaseRef'
+      'db',
+      'firebaseRef',
+      'videos'
     ],
+    ready() {
+      log('refs', this);
+    },
     methods: {
       /**
        * addToQueue() adds video to Firebase database
@@ -58,7 +64,7 @@
           return;
         }
 
-        this.firebaseRef.database().ref('queue').push({
+        this.db.ref('queue').push({
           performer: 'Thai',
           song: {
             id: video.id.videoId,

@@ -14,25 +14,51 @@
   import YoutubeIframeLoader from 'youtube-iframe';
 
   export default {
+    computed: {
+        currentVideo() {
+          return this.videos[0];
+        }
+    },
     data() {
       return {
-        currentVideo: {},
         db: this.firebaseRef.database(),
-        queueRef: this.firebaseRef.database().ref('queue'),
         player: null,
-        videoTimer: null,
-        videos: [],
-        videoURL: null
+        videoTimer: null
       }
     },
     mixins: [
       firebaseMixin
     ],
     props: [
-      'firebaseRef'
+      'firebaseRef',
+      'videos'
     ],
     ready() {
       YoutubeIframeLoader.load(this.setPlayer);
+
+      // Check how many videos we have
+      setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 1200);
+    },
+    watch: {
+      videos(newVal, oldVal) {
+        // Current video should be the first item
+        // If it's different, load next video
+        if(newVal[0] !== oldVal[0]) {
+          if(this.currentVideo) {
+            log('onQueueChildRemoved - loading next video');
+            this.player.cueVideoById(this.currentVideo.song.id);
+          } else {
+            // If there's no video, just stop
+            log('onQueueChildRemoved - stopping current video');
+            this.player.stopVideo();
+          }
+        }
+
+        if(newVal.length > 0 && oldVal.length === 0) {
+          log('onQueueChildRemoved - play video when there were no videos before');
+          this.player.cueVideoById(this.currentVideo.song.id);
+        }
+      }
     },
     methods: {
       /**
@@ -52,31 +78,14 @@
         }
       },
       /**
-       * onQueueChange() listens to changes to the Firebase queue
+       * onPositionChange() handles when player is playing
        * @param  {Object} snapshot  Firebase object
        */
-      onQueueChange(snapshot) {
-        // var videosData = snapshot.val();
-        //
-        // this.currentVideo = videosData ? videosData[Object.keys(videosData)[0]]: null;
-        //
-        // if(this.currentVideo) {
-        //   this.firebaseRef.database().ref().update({currentTrack: this.currentVideo});
-        //
-        //   log('currentVideo', this.currentVideo);
-        //   this.player.cueVideoById(this.currentVideo.song.id);
-        // }
-      },
-      /**
-       * onTrackChange() loads a new video
-       * @param  {Object} snapshot  Firebase data
-       */
-      onTrackChange(snapshot) {
-        var resVideo = snapshot.val();
+      onPositionChange(snapshot) {
+        var position = snapshot.val();
 
-        // Make sure video doesn't load twice
-        if(this.currentVideo && resVideo.song.id !== this.currentVideo.song.id) {
-          this.player.loadVideoById(snapshot.val().song.id);
+        if(position === 0) {
+          this.player.seekTo(0);
         }
       },
       /**
@@ -86,17 +95,28 @@
         // Bind Firebase events to player
         this.db.ref('isPlaying').on('value', this.onPlaybackChange);
 
-        this.db.ref('currentTrack').on('value', this.onTrackChange);
-
-        this.db.ref('queue').on('value', this.onQueueChange);
+        this.db.ref('videoPosition').on('value', this.onPositionChange);
       },
       onPlayerStateChange(e) {
         log('state changing', e.data);
 
-        if(e.data === 1) { // Started playing
-          this.trackTime();
-        } else {
-          clearInterval(this.videoTimer);
+        switch(e.data) {
+          case 1: //playing
+            this.trackTime();
+            break;
+          case 0: //ended
+            this.playNext();
+            clearInterval(this.videoTimer);
+            break;
+        }
+      },
+      /**
+       * playNext() plays next video in queue
+       */
+      playNext() {
+        if(this.videos) {
+          // remove first item in array
+          this.db.ref('queue/' + this.videos[0]['key']).remove(() => log('%c removed', 'color: red', this.videos[0]['key']));
         }
       },
       /**
@@ -120,43 +140,32 @@
           }
         }
 
-        // Fetch videos from 'queue' if empty
-        this.queueRef.once('value').then((snapshot) => {
-          var videosData = snapshot.val();
-
-          // Set current video if there is a queue
-          this.currentVideo = videosData ? videosData[Object.keys(videosData)[0]]: null;
-
-          // If there is a current video, update Firebase
-          this.db.ref().update({currentTrack: this.currentVideo});
-
+        this.db.ref('videoPosition').once('value').then((snapshot) => {
           if(this.currentVideo) {
             // Set the Youtube player to play currentVideo
             youtubeOpts.videoId = this.currentVideo.song.id;
           }
 
-          this.db.ref('videoPosition').once('value').then((snapshot) => {
-            var position = snapshot.val();
+          var position = snapshot.val();
 
-            // Set starting position
-            if(position) {
-              youtubeOpts.playerVars.start = position;
+          // Set starting position
+          if(position) {
+            youtubeOpts.playerVars.start = position;
 
-              // Check if player should be playing
-              this.db.ref('isPlaying').once('value').then((snapshot) => {
-                // If isPlaying is true, set autoplay to true
-                if(snapshot.val()) {
-                  youtubeOpts.playerVars.autoplay = true;
-                }
+            // Check if player should be playing
+            this.db.ref('isPlaying').once('value').then((snapshot) => {
+              // If isPlaying is true, set autoplay to true
+              if(snapshot.val()) {
+                youtubeOpts.playerVars.autoplay = true;
+              }
 
-                // Set up player to #mainPlayer element
-                this.player = new YT.Player('mainPlayer', youtubeOpts);
-              });
-            } else {
               // Set up player to #mainPlayer element
               this.player = new YT.Player('mainPlayer', youtubeOpts);
-            }
-          });
+            });
+          } else {
+            // Set up player to #mainPlayer element
+            this.player = new YT.Player('mainPlayer', youtubeOpts);
+          }
         });
       },
       /**
