@@ -1,5 +1,10 @@
 <template>
   <div v-bind:class="{'has-video': currentVideo}" class="video-view">
+    <div v-if="showPreview" class="preview">
+        <h2>{{ currentVideo.performer }} is perfoming</h2>
+        <h1>{{ currentVideo.song.title }}
+    </div>
+
     <div class="video-container">
       <div id="mainPlayer"></div>
     </div>
@@ -9,54 +14,48 @@
 </template>
 
 <script>
-  import firebaseMixin from '../mixins/firebase';
   import log from '../helpers/log.js';
   import YoutubeIframeLoader from 'youtube-iframe';
 
   export default {
     computed: {
-        currentVideo() {
-          return this.videos[0];
-        }
+      showPreview() {
+        return !this.isPlaying && this.currentVideo;
+      }
     },
     data() {
       return {
-        db: this.firebaseRef.database(),
+        isPlaying: false,
         player: null,
         videoTimer: null
       }
     },
-    mixins: [
-      firebaseMixin
-    ],
     props: [
-      'firebaseRef',
+      'currentVideo',
+      'db',
       'videos'
     ],
     ready() {
       YoutubeIframeLoader.load(this.setPlayer);
-
-      // Check how many videos we have
-      setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 1200);
     },
     watch: {
-      videos(newVal, oldVal) {
-        // Current video should be the first item
-        // If it's different, load next video
-        if(newVal[0] !== oldVal[0]) {
-          if(this.currentVideo) {
-            log('onQueueChildRemoved - loading next video');
-            this.player.cueVideoById(this.currentVideo.song.id);
-          } else {
-            // If there's no video, just stop
-            log('onQueueChildRemoved - stopping current video');
-            this.player.stopVideo();
-          }
+      'videos[0]'(newVal, oldVal) {
+        // If player isn't ready yet, return
+        if(!this.player) {
+          return;
         }
 
-        if(newVal.length > 0 && oldVal.length === 0) {
-          log('onQueueChildRemoved - play video when there were no videos before');
-          this.player.cueVideoById(this.currentVideo.song.id);
+        var currentVideo = this.videos[0];
+
+        // Current video should be the first item.
+        // When a new video is loaded, the first one is removed.
+        // Therefore, the first items should be different from
+        // the newVal[0] and oldVal[0]
+        if(currentVideo && newVal !== oldVal) {
+          this.player.loadVideoById(currentVideo.song.id);
+        } else if(!currentVideo){
+          // If there's no video, just stop
+          this.player.stopVideo();
         }
       }
     },
@@ -67,10 +66,9 @@
        * @param  {Object} snapshot  Firebase data
        */
       onPlaybackChange(snapshot) {
-        log('playback change',snapshot.val());
-        var isPlaying = snapshot.val();
+        this.isPlaying = snapshot.val();
 
-        if(isPlaying) {
+        if(this.isPlaying) {
           this.player.playVideo();
         } else if (this.player.getPlayerState() === 1) {
           // Pause video only if video is playing
@@ -98,8 +96,6 @@
         this.db.ref('videoPosition').on('value', this.onPositionChange);
       },
       onPlayerStateChange(e) {
-        log('state changing', e.data);
-
         switch(e.data) {
           case 1: //playing
             this.trackTime();
@@ -108,16 +104,24 @@
             this.playNext();
             clearInterval(this.videoTimer);
             break;
+          default:
+            clearInterval(this.videoTimer);
         }
       },
       /**
        * playNext() plays next video in queue
        */
       playNext() {
-        if(this.videos) {
-          // remove first item in array
-          this.db.ref('queue/' + this.videos[0]['key']).remove(() => log('%c removed', 'color: red', this.videos[0]['key']));
+        this.db.ref().update({videoPosition: 0});
+
+        if(!this.currentVideo) {
+          return;
         }
+
+        var key = this.currentVideo.key;
+
+        // remove first item in array
+        this.db.ref('queue/' + key).remove(() => log('%c removed', 'color: red', key));
       },
       /**
        * setPlayer() sets up the Youtube player
@@ -180,13 +184,11 @@
           }
 
           // Update Firebase with player position
-          setTimeout(() => {
-            this.videoTimer = setInterval(() => {
-              this.db.ref().update({
-                videoPosition: parseInt(this.player.getCurrentTime(), 10)}
-              );
-            },1000);
-          }, 100);
+          this.videoTimer = setInterval(() => {
+            this.db.ref().update({
+              videoPosition: parseInt(this.player.getCurrentTime(), 10)}
+            );
+          },1000);
         });
       },
     }
@@ -194,14 +196,29 @@
 </script>
 
 <style lang="sass" scoped>
-  .has-video {
-      .no-videos {
-        display: none;
-      }
+  .preview {
+    align-items: center;
+    background: coral;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    padding: 18%;
+    position: fixed;
+    text-align: center;
+    width: 100vw;
+    z-index: 100;
+  }
 
-      .video-container {
-        display: block;
-      }
+  .has-video {
+    .no-videos {
+      display: none;
+    }
+
+    .video-container {
+      display: block;
+    }
   }
 
   .video-container {
@@ -216,6 +233,7 @@
     height: 100vh;
     justify-content: center;
     margin-top: 0;
+    text-align: center;
   }
 
   .video-view {

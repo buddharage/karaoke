@@ -1,8 +1,8 @@
 <template>
   <controls v-if="videos.length"
     :db="db"
-    :firebase-ref="firebaseRef"
     :videos="videos"
+    :current-video="currentVideo"
     ></controls>
 
   <div class="fixed-action-btn">
@@ -15,7 +15,7 @@
 
   <ul v-if="videos && videos.length" class="collection">
     <li v-for="video in videos" track-by="key" class="collection-item">
-        {{ video.song.title }}
+        {{ video.performer }} - {{ video.song.title }}
     </li>
   </ul>
 
@@ -34,8 +34,8 @@
       'controls': controls
     },
     props: [
+      'currentVideo',
       'db',
-      'firebaseRef',
       'videos'
     ],
     ready() {

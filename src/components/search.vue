@@ -9,7 +9,7 @@
 
   <form v-on:submit.prevent="searchYT">
     <div class="input-field">
-      <input type="text" placeholder="Search" v-model="query">
+      <input type="text" placeholder="Search" v-model="query" id="video-search">
     </div>
   </form>
 
@@ -46,13 +46,10 @@
       }
     },
     props: [
+      'currentVideo',
       'db',
-      'firebaseRef',
       'videos'
     ],
-    ready() {
-      log('refs', this);
-    },
     methods: {
       /**
        * addToQueue() adds video to Firebase database
@@ -82,7 +79,8 @@
       searchYT() {
         youtube.search().list({
           part: 'snippet',
-          q: this.query + ' karaoke'
+          // q: this.query + ' karaoke'
+          q: this.query
         }).then((data) => {
           if(!data) {
             return;

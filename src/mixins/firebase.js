@@ -87,7 +87,7 @@ function bind(vm, key, source) {
  */
 function bindAsArray (vm, key, source, cancelCallback) {
   var array = [];
-  vm.$set(key, array);
+  vm[key] = array;
 
   var onAdd = source.on('child_added', (snapshot) => {
     array.push(createRecord(snapshot));

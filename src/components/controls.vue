@@ -25,8 +25,8 @@
       }
     },
     props: [
+      'currentVideo',
       'db',
-      'firebaseRef',
       'videos'
     ],
     ready() {
@@ -41,11 +41,14 @@
         this.db.ref().update({videoPosition: 0});
       },
       skipVideo() {
-        this.db.ref('queue').once('value').then((snapshot) => {
-          var videosData = snapshot.val();
+        if(!this.currentVideo) {
+          return;
+        }
 
-          this.db.ref('queue/' + Object.keys(videosData)[0]).remove(() => log('%c removed', 'color: red', Object.keys(videosData)[0]));
-        });
+        var key = this.currentVideo.key;
+
+        // remove first item in array
+        this.db.ref('queue/' + key).remove(() => log('%c removed', 'color: red', key));
       },
       togglePlayback() {
         // Toggle isPlaying
