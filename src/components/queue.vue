@@ -40,7 +40,7 @@
     ],
     ready() {
       // Check how many videos we have
-      setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 1200);
+      setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 800);
     }
   }
 </script>

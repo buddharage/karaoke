@@ -52,9 +52,22 @@
         // Therefore, the first items should be different from
         // the newVal[0] and oldVal[0]
         if(currentVideo && newVal !== oldVal) {
-          this.player.loadVideoById(currentVideo.song.id);
-        } else if(!currentVideo){
+          this.db.ref().update({isPlaying: false});
+
+          this.player.cueVideoById(currentVideo.song.id);
+
+          if(this.videos.length > 1) {
+            // Show preview for 10 seconds before playing video
+            setTimeout(() => {
+              // Update Firebase with playback status
+              this.db.ref().update({isPlaying: true});
+            }, 10000);
+          }
+        } else if(!currentVideo && !this.videos.length){
           // If there's no video, just stop
+          // Update Firebase with playback status
+          this.db.ref().update({isPlaying: false});
+
           this.player.stopVideo();
         }
       }
@@ -136,7 +149,8 @@
             modestbranding: true,
             rel: 0,
             showinfo: 0,
-            start: 0
+            start: 0,
+            loop: 0
           },
           events: {
             'onReady': this.onPlayerReady,

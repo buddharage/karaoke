@@ -23,7 +23,7 @@
     computed: {
       currentVideo() {
         if(this.videos.length) {
-          log('%c currentVideo %s', 'color: aquamarine', this.videos[0].song.title);
+          log('%c Currently playing: %c %s', 'color: aquamarine', 'color: coral', this.videos[0].song.title);
         }
         return this.videos[0];
       }
