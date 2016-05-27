@@ -6,7 +6,7 @@
     ></controls>
 
   <div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
+    <a class="btn-floating btn-large waves-effect waves-light green btn-floating"
       style="bottom: 1%; right: 1%;"
       v-link="'/search'">
       <i class="material-icons">search</i>
@@ -21,7 +21,7 @@
 
   <div v-else class="no-songs center">
     <p>No videos are in queue.<p>
-    <a class="btn" v-link="'/search'">Let's do this!</a>
+    <a  v-link="'/search'"class="btn green">Let's do this!</a>
   </div>
 
   <div v-if="isVideoModalOpen" class="modal bottom-sheet center" transition="modal">
@@ -59,15 +59,24 @@
       setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 800);
     },
     methods: {
+      /**
+       * openVideoModal() opens video-specific modal
+       * @param  {Object} video
+       */
       openVideoModal(video) {
         if(!video) {
           return;
         }
 
+        // Open modal
         this.isVideoModalOpen = true;
 
+        // Set the current opened video
         this.openedVideo = video;
       },
+      /**
+       * removeVideo() removes a video from the queue
+       */
       removeVideo() {
         if(!this.openedVideo) {
           return;

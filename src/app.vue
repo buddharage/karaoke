@@ -51,6 +51,7 @@
        * bindFirebaseEvents() adds event listeners for Firebase
        */
       bindFirebaseEvents() {
+        // Listen for messages
         this.db.ref('message').on('value', this.onMessage);
       },
       /**
@@ -76,7 +77,10 @@
         this.message = message;
 
         // Dismiss message
-        this.dismissMessageTimeout = setTimeout(() => this.message = null, 8000);
+        this.dismissMessageTimeout = setTimeout(() =>
+          // Empty message
+          this.db.ref().update({'message': ''})
+        , 8000);
       }
     }
   }

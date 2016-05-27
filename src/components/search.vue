@@ -8,21 +8,24 @@
       </a>
     </div>
 
-    <form v-on:submit.prevent="searchYT">
+    <form v-on:submit.prevent="searchYT" class="search-form">
       <div class="input-field">
         <input v-model="query" v-el:search-Input type="text" placeholder="Search">
       </div>
+
+      <button class="search-submit-btn btn-floating btn-small waves-effect waves-light"><i class="material-icons">search</i></button>
     </form>
 
     <div class="search-results row">
-      <div class="card tiny activator col s12 m6 l4"
-        v-for="video in videosResult"
-        v-on:click.prevent="confirmVideo(video)">
+      <div v-for="video in videosResult" class="col s12 m6 l4">
+        <div v-on:click.prevent="confirmVideo(video)"class="card tiny">
           <div class="card-image">
             <img v-bind:src="video.snippet.thumbnails.high.url">
           </div>
-        <div class="card-content">
-          <span class="card-title">{{ video.snippet.title }}</span>
+
+          <div class="card-content">
+            <span class="card-title">{{ video.snippet.title }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -140,6 +143,20 @@
 </script>
 
 <style lang="sass" scoped>
+  .search-form {
+    position: relative;
+
+    .input-field {
+      padding-right: 48px;
+    }
+
+    .search-submit-btn {
+      right: 0;
+      position: absolute;
+      top: 0;
+    }
+  }
+
   .modal {
     .input-field {
       margin: 3.6rem 0;
@@ -150,19 +167,14 @@
     }
   }
 
-  .card .card-content {
-    padding-left: 0;
-    padding-right: 0;
-
-    .card-title {
-      display: block;
-      line-height: 1.3em;
-      font-size: 1.3rem;
-      font-weight: 300;
-      overflow: hidden;
-      text-overflow: elipsis;
-      white-space: nowrap;
-      width: 100%;
-    }
+  .card .card-content .card-title {
+    display: block;
+    line-height: 1.3em;
+    font-size: 1.1rem;
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: elipsis;
+    white-space: nowrap;
+    width: 100%;
   }
 </style>
