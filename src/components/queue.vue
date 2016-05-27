@@ -14,7 +14,7 @@
   </div>
 
   <ul v-if="videos && videos.length" class="collection">
-    <li v-for="video in videos" track-by="key" class="collection-item">
+    <li v-for="video in videos" track-by="key" transition="append" class="collection-item">
         {{ video.performer }} - {{ video.song.title }}
     </li>
   </ul>
@@ -44,3 +44,20 @@
     }
   }
 </script>
+
+<style lang="sass" scoped>
+  /** Custom VueJS animations **/
+  .append-transition {
+    opacity: 1;
+    perspective: 100px;
+    transform: none;
+    transition: transform 0.5s cubic-bezier(.36,-0.64,.34,1.76);
+  }
+
+  .append-enter,
+  .append-leave {
+    opacity: 0;
+    transform: rotateX(-90deg);
+  }
+  /** End Animations **/
+</style>
