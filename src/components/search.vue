@@ -176,6 +176,7 @@
   .modal-transition {
     bottom: 0;
     display: block;
+    max-height: 100%;
     transition: all 0.5s ease-out;
     z-index: 1000;
   }
