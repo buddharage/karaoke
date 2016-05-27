@@ -1,47 +1,49 @@
 <template>
-  <div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
-      style="bottom: 2rem; right: 2rem;"
-      v-link="'/'">
-      <i class="material-icons">list</i>
-    </a>
-  </div>
-
-  <form v-on:submit.prevent="searchYT">
-    <div class="input-field">
-      <input v-model="query" v-el:search-Input type="text" placeholder="Search">
+  <div class="search-view container">
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
+        style="bottom: 1%; right: 1%;"
+        v-link="'/'">
+        <i class="material-icons">clear</i>
+      </a>
     </div>
-  </form>
 
-  <div class="search-results row">
-    <div class="card small activator col s12 m6 l4"
-      v-for="video in videosResult"
-      v-on:click.prevent="confirmVideo(video)">
-        <div class="card-image">
-          <img v-bind:src="video.snippet.thumbnails.high.url">
-        </div>
-      <div class="card-content">
-        <span class="card-title">{{ video.snippet.title }}</span>
-      </div>
-    </div>
-  </div>
-
-  <div v-if="isConfirmModalOpen" class="modal bottom-sheet center z-depth-3" transition="modal">
-    <div v-if="videoToConfirm" class="modal-content">
-      <p>Who's singing</p>
-
-      <h5>{{ videoToConfirm.snippet.title }}?</h5>
-
+    <form v-on:submit.prevent="searchYT">
       <div class="input-field">
-        <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name"  id="input-performer">
-        <label class="active" for="input-performer">Performer</label>
+        <input v-model="query" v-el:search-Input type="text" placeholder="Search">
       </div>
+    </form>
 
-      <button v-on:click.prevent="addToQueue(videoToConfirm)" class="btn">Ok</button>
+    <div class="search-results row">
+      <div class="card tiny activator col s12 m6 l4"
+        v-for="video in videosResult"
+        v-on:click.prevent="confirmVideo(video)">
+          <div class="card-image">
+            <img v-bind:src="video.snippet.thumbnails.high.url">
+          </div>
+        <div class="card-content">
+          <span class="card-title">{{ video.snippet.title }}</span>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div v-if="isConfirmModalOpen" v-on:click="isConfirmModalOpen = false" transition="fade" class="overlay"></div>
+    <div v-if="isConfirmModalOpen" class="modal bottom-sheet center z-depth-3" transition="modal">
+      <div v-if="videoToConfirm" class="modal-content">
+        <p>Who's singing</p>
+
+        <h5>{{ videoToConfirm.snippet.title }}?</h5>
+
+        <div class="input-field">
+          <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name"  id="input-performer">
+          <label class="active" for="input-performer">Performer</label>
+        </div>
+
+        <button v-on:click.prevent="addToQueue(videoToConfirm)" class="btn">Ok</button>
+      </div>
+    </div>
+
+    <div v-if="isConfirmModalOpen" v-on:click="isConfirmModalOpen = false" transition="fade" class="overlay"></div>
+  </div>
 </template>
 
 <script>
@@ -141,17 +143,6 @@
     }
   }
 
-  .fade-transition {
-    transition: opacity 0.5s linear;
-    display: block;
-    opacity: 0.5;
-  }
-
-  .fade-enter,
-  .fade-leave {
-    opacity: 0;
-  }
-
   .overlay {
     background: #000;
     height: 100vh;
@@ -160,6 +151,22 @@
     top: 0;
     width: 100vw;
     z-index: 999;
+  }
+
+  .card .card-content {
+    padding-left: 0;
+    padding-right: 0;
+
+    .card-title {
+      display: block;
+      line-height: 1.3em;
+      font-size: 1.3rem;
+      font-weight: 300;
+      overflow: hidden;
+      text-overflow: elipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
   }
 
   /**
@@ -178,6 +185,17 @@
   .modal-leave,
   .modal-enter {
     bottom: -100%;
+  }
+
+  .fade-transition {
+    transition: opacity 0.5s linear;
+    display: block;
+    opacity: 0.5;
+  }
+
+  .fade-enter,
+  .fade-leave {
+    opacity: 0;
   }
 
   /**

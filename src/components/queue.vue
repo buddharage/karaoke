@@ -7,7 +7,7 @@
 
   <div class="fixed-action-btn">
     <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
-      style="bottom: 2rem; right: 2rem;"
+      style="bottom: 1%; right: 1%;"
       v-link="'/search'">
       <i class="material-icons">search</i>
     </a>

@@ -1,7 +1,7 @@
 <template>
   <div v-bind:class="{'has-video': currentVideo}" class="video-view">
     <div v-if="showPreview" class="preview">
-        <h2>{{ currentVideo.performer }} is perfoming</h2>
+        <h4>{{ currentVideo.performer }} is perfoming</h2>
         <h1>{{ currentVideo.song.title }}
     </div>
 
@@ -223,6 +223,10 @@
     text-align: center;
     width: 100vw;
     z-index: 100;
+
+    h1, h2, h3, h4, h5 {
+      font-weight: 200;
+    }
   }
 
   .has-video {
