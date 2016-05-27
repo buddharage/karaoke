@@ -14,7 +14,7 @@
   </div>
 
   <ul v-if="videos && videos.length" class="collection">
-    <li v-for="video in videos" track-by="key" transition="append" class="collection-item">
+    <li v-for="video in videos" v-on:click="openVideoModal(video)" track-by="key" transition="append" class="collection-item">
         {{ video.performer }} - {{ video.song.title }}
     </li>
   </ul>
@@ -23,6 +23,16 @@
     <p>No videos are in queue.<p>
     <a class="btn" v-link="'/search'">Let's do this!</a>
   </div>
+
+  <div v-if="isVideoModalOpen" class="modal bottom-sheet center" transition="modal">
+    <div v-if="openedVideo" class="modal-content">
+      <h5>{{ openedVideo.song.title }}?</h5>
+
+      <button v-on:click.prevent="removeVideo" class="btn red">Remove Video</button>
+    </div>
+  </div>
+
+  <div v-if="isVideoModalOpen" v-on:click="isVideoModalOpen = false" transition="fade" class="overlay"></div>
 </template>
 
 <script>
@@ -33,6 +43,12 @@
     components: {
       'controls': controls
     },
+    data() {
+      return {
+        isVideoModalOpen: false,
+        openedVideo: {}
+      }
+    },
     props: [
       'currentVideo',
       'db',
@@ -41,11 +57,45 @@
     ready() {
       // Check how many videos we have
       setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 800);
+    },
+    methods: {
+      openVideoModal(video) {
+        if(!video) {
+          return;
+        }
+
+        this.isVideoModalOpen = true;
+
+        this.openedVideo = video;
+      },
+      removeVideo() {
+        if(!this.openedVideo) {
+          return;
+        }
+
+        var key = this.openedVideo.key;
+
+        this.isVideoModalOpen = false;
+
+        this.db.ref().update({'message': this.openedVideo.song.title + ' has been removed!'});
+
+        // remove first item in array
+        this.db.ref('queue/' + key).remove(() => log('%c removed', 'color: red', key));
+      }
     }
   }
 </script>
 
 <style lang="sass" scoped>
+  .collection-item {
+    cursor: pointer;
+  }
+
+  .modal {
+    button {
+      margin: 3.6rem 0;
+    }
+  }
   /** Custom VueJS animations **/
   .append-transition {
     opacity: 1;

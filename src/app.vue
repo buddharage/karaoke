@@ -43,12 +43,27 @@
         }
       }
     },
-    events: {
+    ready() {
+      this.bindFirebaseEvents();
+    },
+    methods: {
+      /**
+       * bindFirebaseEvents() adds event listeners for Firebase
+       */
+      bindFirebaseEvents() {
+        this.db.ref('message').on('value', this.onMessage);
+      },
       /**
        * onMessage() shows a message if one is set by a Vue event
        * @param  {String} message
        */
-      onMessage(message) {
+      onMessage(snapshot) {
+        if(!snapshot) {
+          return;
+        }
+
+        var message = snapshot.val();
+
         clearTimeout(this.dismissMessageTimeout);
 
         if(!message) {
@@ -84,9 +99,52 @@
     }
   }
 
+  .modal {
+    h1, h2, h3, h4, h5 {
+      line-height: 1.6em;
+    }
+  }
+
+  .overlay {
+    background: #000;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 999;
+  }
+
   /**
    * Custom VueJS Animations
    */
+  .fade-transition {
+    transition: opacity 0.5s linear;
+    display: block;
+    opacity: 0.5;
+  }
+
+  .fade-enter,
+  .fade-leave {
+    opacity: 0;
+  }
+
+  .modal.bottom-sheet.modal-transition,
+  .modal-transition {
+    bottom: 0;
+    display: block;
+    max-height: 100%;
+    transition: all 0.5s ease-out;
+    z-index: 1000;
+  }
+
+  .modal.bottom-sheet.modal-leave,
+  .modal.bottom-sheet.modal-enter,
+  .modal-leave,
+  .modal-enter {
+    bottom: -100%;
+  }
+
   .toast-transition {
     bottom: 1rem;
     left: 50%;
