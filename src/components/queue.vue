@@ -26,9 +26,12 @@
 
   <div v-if="isVideoModalOpen" class="modal bottom-sheet center" transition="modal">
     <div v-if="openedVideo" class="modal-content">
-      <h5>{{ openedVideo.song.title }}?</h5>
+      <h5>{{ openedVideo.song.title }}</h5>
 
-      <button v-on:click.prevent="removeVideo" class="btn red">Remove Video</button>
+      <div class="options">
+        <button v-on:click.prevent="removeVideo" class="btn red">Remove Video</button>
+        <button v-on:click.prevent="moveVideoToNext" class="btn blue">Play Next</button>
+      </div>
     </div>
   </div>
 
@@ -60,6 +63,62 @@
     },
     methods: {
       /**
+       * Find the index for an object with given key.
+       *
+       * @param {array} array
+       * @param {string} key
+       * @return {number}
+       */
+      indexForKey(array, key) {
+        for(var i = 0; i < array.length; i++) {
+          if (array[i]['key'] === key) {
+            return i;
+          }
+        }
+        /* istanbul ignore next */
+        return -1;
+      },
+      /**
+       * moveVideoToNext() moves the video to the front of the queue
+       */
+      moveVideoToNext() {
+        var openedVideoKey = this.indexForKey(this.videos, this.openedVideo.key);
+        var newQueue = {};
+
+        if(!openedVideoKey) {
+          return;
+        }
+
+        /**
+         *  Re-order on the local array
+         */
+
+        // Delete from queue
+        this.videos.splice(openedVideoKey, 1);
+
+        // Add it to next in queue
+        this.videos.splice(1, 0, this.openedVideo);
+
+        /**
+         * Convert to a Firebase array that is indexed by the key
+         */
+        this.videos.forEach((video, index) => {
+          newQueue[video.key] = video;
+        });
+
+        // Replace the queue with the new ordered queue
+        this.db.ref().update({'queue': newQueue});
+
+        // Broadcast message
+        this.db.ref().update({
+          'message': this.openedVideo.song.title + ' moved up!'
+        });
+
+        // Close modal
+        this.isVideoModalOpen = false;
+        this.openedVideo = null;
+      },
+      /**
        * openVideoModal() opens video-specific modal
        * @param  {Object} video
        */
@@ -89,7 +148,11 @@
         this.db.ref().update({'message': this.openedVideo.song.title + ' has been removed!'});
 
         // remove first item in array
-        this.db.ref('queue/' + key).remove(() => log('%c removed', 'color: red', key));
+        this.db.ref('queue/' + key).remove(() => {
+          log('%c removed', 'color: red', key)
+
+          this.openedVideo = null;
+        });
       }
     }
   }
@@ -101,8 +164,21 @@
   }
 
   .modal {
-    button {
+    .options {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
       margin: 3.6rem 0;
+
+      button {
+        margin-bottom: 1.6em;
+        max-width: 25rem;
+        width: 100%;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
     }
   }
   /** Custom VueJS animations **/
