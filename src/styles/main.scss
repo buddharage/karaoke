@@ -8,8 +8,16 @@
 // Variables;
 @import "components/variables";
 
+/**
+ * Custom Variables
+ */
+
 // Fix path resolution for fonts - must be relative to this file
 $roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
+
+// Make navbar larger for the player controls
+$navbar-height: 120px;
+$navbar-height-mobile: 120px;
 
 // Reset
 @import "components/normalize";

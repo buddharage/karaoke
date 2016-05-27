@@ -1,18 +1,20 @@
 <template>
-  <nav class="controls center grey darken-4">
-    <button v-on:click.prevent="replayVideo" class="btn-floating btn-medium waves-effect waves-light grey darken-1">
-      <i class="material-icons">replay</i>
-    </button>
+  <div class="navbar-fixed">
+    <nav class="controls center grey darken-4 z-depth-1">
+      <button v-on:click.prevent="replayVideo" class="btn-floating btn-medium waves-effect waves-light grey darken-1">
+        <i class="material-icons">replay</i>
+      </button>
 
-    <button v-on:click.prevent="togglePlayback" class="btn-floating btn-large waves-effect waves-light pink ligthen-1">
-      <i v-if="isPlaying" class="material-icons">pause</i>
-      <i v-else class="material-icons">play_arrow</i>
-    </button>
+      <button v-on:click.prevent="togglePlayback" class="btn-floating btn-large waves-effect waves-light pink ligthen-1">
+        <i v-if="isPlaying" class="material-icons">pause</i>
+        <i v-else class="material-icons">play_arrow</i>
+      </button>
 
-    <button v-on:click.prevent="skipVideo" class="btn-floating btn-medium waves-effect waves-light grey darken-1">
-      <i class="material-icons">skip_next</i>
-    </button>
-  </nav>
+      <button v-on:click.prevent="skipVideo" class="btn-floating btn-medium waves-effect waves-light grey darken-1">
+        <i class="material-icons">skip_next</i>
+      </button>
+    </nav>
+  </div>
 </template>
 
 <script>
@@ -62,11 +64,6 @@
 </script>
 
 <style lang="sass" scoped>
-  .controls {
-    height: auto;
-    padding: 5% 0;
-  }
-
   nav i.material-icons {
     height: auto;
     line-height: 1em;
