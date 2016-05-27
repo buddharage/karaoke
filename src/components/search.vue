@@ -9,7 +9,7 @@
 
   <form v-on:submit.prevent="searchYT">
     <div class="input-field">
-      <input type="text" placeholder="Search" v-model="query" id="video-search">
+      <input v-model="query" v-el:search-Input type="text" placeholder="Search">
     </div>
   </form>
 
@@ -33,7 +33,6 @@
       <h5>{{ videoToConfirm.snippet.title }}?</h5>
 
       <div class="input-field">
-        <i class="material-icons prefix">mic</i>
         <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name"  id="input-performer">
         <label class="active" for="input-performer">Performer</label>
       </div>
@@ -71,6 +70,10 @@
       'db',
       'videos'
     ],
+    ready() {
+      // Focus on search input
+      this.$els.searchInput.focus();
+    },
     methods: {
       /**
        * addToQueue() adds video to Firebase database
