@@ -15,9 +15,11 @@ $roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
 @import "components/normalize";
 
 // components
+@import "components/dropdown";
 @import "components/global";
 @import "components/icons-material-design";
 @import "components/grid";
+@import "components/modal";
 @import "components/navbar";
 @import "components/roboto";
 @import "components/typography";
@@ -30,8 +32,6 @@ $roboto-font-path: "../../node_modules/materialize-css/fonts/roboto/";
 @import "components/toast";
 @import "components/tabs";
 @import "components/tooltip";
-@import "components/dropdown";
-@import "components/modal";
 @import "components/collapsible";
 @import "components/chips";
 @import "components/table_of_contents";
