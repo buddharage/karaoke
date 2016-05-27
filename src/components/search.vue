@@ -87,6 +87,8 @@
           return;
         }
 
+        log('adding this video: ', video);
+
         this.db.ref('queue').push({
           performer: this.performer,
           song: {
@@ -98,6 +100,10 @@
 
           // Redirect to queue view
           this.$route.router.go({name: 'queue'})
+
+          // Show a messsage to confirm to user that video
+          // has been added
+          this.$dispatch('onMessage', video.snippet.title + ' added!');
         });
       },
       confirmVideo(video) {

@@ -5,6 +5,10 @@
       :db="db"
       :videos="videos"
       ></router-view>
+
+      <div v-if="message" transition="toast" v-on:click.prevent="message = null" class="btn message pink ligthen-1">
+        <span>{{ message }}</span>
+      </div>
   </div>
 </template>
 
@@ -31,10 +35,73 @@
     data() {
       return {
         db: firebaseRef.database(),
+        dismissMessageTimeout: null,
+        message: '',
+        showMessage: false,
         videos: {
           source: firebaseRef.database().ref('queue')
         }
       }
+    },
+    events: {
+      /**
+       * onMessage() shows a message if one is set by a Vue event
+       * @param  {String} message
+       */
+      onMessage(message) {
+        clearTimeout(this.dismissMessageTimeout);
+
+        if(!message) {
+          this.message = '';
+
+          return;
+        }
+
+        // Set message
+        this.message = message;
+
+        // Dismiss message
+        this.dismissMessageTimeout = setTimeout(() => this.message = null, 8000);
+      }
     }
   }
 </script>
+
+<style lang="sass">
+  .message {
+    max-width: 80%;
+    z-index: 1000;
+    width: auto;
+
+    &.btn {
+      height: auto;
+      line-height: 1.3em;
+      padding: 1em;
+    }
+
+    span {
+      width: 100%;
+    }
+  }
+
+  /**
+   * Custom VueJS Animations
+   */
+  .toast-transition {
+    bottom: 1rem;
+    left: 50%;
+    opacity: 1;
+    position: fixed;
+    transform: translateX(-50%);
+    transition: all 2s ease-out;
+  }
+
+  .toast-enter,
+  .toast-leave {
+    bottom: -100%;
+    opacity: 0;
+  }
+  /**
+   * End Animations
+   */
+</style>
