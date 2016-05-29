@@ -15,7 +15,7 @@
 
   <ul v-if="videos && videos.length" class="collection">
     <li v-for="(index, video) in videos" v-on:click="openVideoModal(video)" track-by="key" transition="append" class="collection-item">
-        {{ video.performer }} - {{ video.song.title }} <i v-if="index === 0" class="equalizer"></i>
+        <span class="performer-name">{{ video.performer }}</span> - {{ video.song.title }} <i v-if="index === 0 && isPlaying" class="equalizer"></i>
     </li>
   </ul>
 
@@ -48,6 +48,7 @@
     },
     data() {
       return {
+        isPlaying: false,
         isVideoModalOpen: false,
         openedVideo: {}
       }
@@ -58,6 +59,11 @@
       'videos'
     ],
     ready() {
+      // Bind Firebase events to player
+      this.db.ref('isPlaying').on('value', (snapshot) => {
+          this.isPlaying = snapshot.val();
+      });
+
       // Check how many videos we have
       setTimeout(() => log('%c videos in queue', 'color: coral', this.videos), 800);
     },
@@ -159,8 +165,26 @@
 </script>
 
 <style lang="sass" scoped>
-  .collection-item {
+  .collection .collection-item {
     cursor: pointer;
+    line-height: 1.3em;
+    margin-left: 0.6rem;
+    margin-right: 0.6rem;
+
+    .performer-name {
+      text-transform: capitalize;
+    }
+
+    &:first-child {
+      background: #ec407a;
+      color: white;
+      margin-left: 0;
+      margin-right: 0;
+      padding-bottom: 20px;
+      padding-top: 20px;
+      font-size: 28px;
+      font-weight: 200;
+    }
   }
 
   .modal {
@@ -198,7 +222,7 @@
   /**
    * Equalizer
    */
-  $size: 60px;
+  $size: 90px;
 
   // When $size is 40px, $max is 14px, $width is 4px, $margin is 1px
 
@@ -209,8 +233,8 @@
 
   $equalizers: 3;
   $equalizerSize: ($equalizers * $width) + ( ($equalizers - 1) * $margin );
-  $bottom: 10px;
-  $right: 32px;
+  $bottom: 15px;
+  $right: 42px;
   // $bottom: ( $size - $max ) / 2;
   // $left: ( $size - $equalizerSize ) / 2;
 
