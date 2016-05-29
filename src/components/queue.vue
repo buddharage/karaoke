@@ -135,7 +135,7 @@
        * @param  {Object} video
        */
       openVideoModal(video) {
-        if(!video) {
+        if(!video || video === this.currentVideo) {
           return;
         }
 
@@ -184,6 +184,7 @@
     &:first-child {
       background: #ec407a;
       color: white;
+      cursor: default;
       margin-bottom: 10px;
       margin-left: 0;
       margin-right: 0;
