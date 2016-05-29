@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --quiet",
-    "build": "rm -rf build/* && webpack --progress --hide-modules --config webpack.production.js"
+    "build": "rm -rf public/* && webpack --progress --hide-modules --config webpack.production.js"
   },
   "dependencies": {
     "vue-router": "^0.7.6",
@@ -20,7 +20,7 @@
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
-    "firebase": "^3.0.1",
+    "firebase": "^3.0.3",
     "jscs": "^3.0.3",
     "jscs-loader": "^0.3.0",
     "json-loader": "^0.5.4",
@@ -31,7 +31,7 @@
     "url-loader": "^0.5.7",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
-    "vue-loader": "^8.4.0",
+    "vue-loader": "^8.5.2",
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1",
