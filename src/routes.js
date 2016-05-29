@@ -8,7 +8,10 @@ import player from './components/player.vue';
 
 Vue.use(VueRouter);
 
-const router = new VueRouter();
+const router = new VueRouter({
+  history: true,
+  saveScrollPosition: true
+});
 
 // Redirects
 router.redirect({
