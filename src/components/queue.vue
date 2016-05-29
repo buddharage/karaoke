@@ -1,41 +1,43 @@
 <template>
-  <controls v-if="videos.length"
-    :db="db"
-    :videos="videos"
-    :current-video="currentVideo"
-    ></controls>
+  <div class="queue-view">
+    <controls v-if="videos.length"
+      :db="db"
+      :videos="videos"
+      :current-video="currentVideo"
+      ></controls>
 
-  <div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light green btn-floating"
-      style="bottom: 1%; right: 1%;"
-      v-link="'/search'">
-      <i class="material-icons">search</i>
-    </a>
-  </div>
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large waves-effect waves-light green btn-floating"
+        style="bottom: 1%; right: 1%;"
+        v-link="'/search'">
+        <i class="material-icons">search</i>
+      </a>
+    </div>
 
-  <ul v-if="videos && videos.length" class="collection">
-    <li v-for="(index, video) in videos" v-on:click="openVideoModal(video)" track-by="key" transition="append" class="collection-item">
-        <span class="performer-name">{{ video.performer }}</span> - {{ video.song.title }} <i v-if="index === 0 && isPlaying" class="equalizer"></i>
-    </li>
-  </ul>
+    <ul v-if="videos && videos.length" class="collection">
+      <li v-for="(index, video) in videos" v-on:click="openVideoModal(video)" track-by="key" transition="append" class="collection-item">
+          <span class="performer-name">{{ video.performer }}</span> - {{ video.song.title }} <i v-if="index === 0 && isPlaying" class="equalizer"></i>
+      </li>
+    </ul>
 
-  <div v-else class="no-songs center">
-    <p>No videos are in queue.<p>
-    <a  v-link="'/search'"class="btn green">Let's do this!</a>
-  </div>
+    <div v-else class="no-songs center">
+      <p>No videos are in queue.<p>
+      <a  v-link="'/search'"class="btn green">Let's do this!</a>
+    </div>
 
-  <div v-if="isVideoModalOpen" class="modal bottom-sheet center" transition="modal">
-    <div v-if="openedVideo" class="modal-content">
-      <h5>{{ openedVideo.song.title }}</h5>
+    <div v-if="isVideoModalOpen" class="modal bottom-sheet center" transition="modal">
+      <div v-if="openedVideo" class="modal-content">
+        <h5>{{ openedVideo.song.title }}</h5>
 
-      <div class="options">
-        <button v-on:click.prevent="removeVideo" class="btn red lighten-2">Remove Video</button>
-        <button v-on:click.prevent="moveVideoToNext" class="btn blue lighten-1">Play Next</button>
+        <div class="options">
+          <button v-on:click.prevent="removeVideo" class="btn red lighten-2">Remove Video</button>
+          <button v-on:click.prevent="moveVideoToNext" class="btn blue lighten-1">Play Next</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div v-if="isVideoModalOpen" v-on:click="isVideoModalOpen = false" transition="fade" class="overlay"></div>
+    <div v-if="isVideoModalOpen" v-on:click="isVideoModalOpen = false" transition="fade" class="overlay"></div>
+  </div>
 </template>
 
 <script>

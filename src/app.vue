@@ -3,8 +3,9 @@
     <router-view
       :current-video="currentVideo"
       :db="db"
-      :videos="videos"
-      ></router-view>
+      transition="page"
+      transition-mode="out-in"
+      :videos="videos"></router-view>
 
       <div v-if="message" transition="toast" v-on:click.prevent="message = null" class="btn message pink ligthen-1">
         <span>{{ message }}</span>
@@ -87,6 +88,10 @@
 </script>
 
 <style lang="sass">
+  [v-cloak] {
+    display: none;
+  }
+
   .message {
     max-width: 80%;
     z-index: 1000;
@@ -125,7 +130,7 @@
   .fade-transition {
     transition: opacity 0.5s linear;
     display: block;
-    opacity: 0.5;
+    opacity: 1;
   }
 
   .fade-enter,
@@ -147,6 +152,23 @@
   .modal-leave,
   .modal-enter {
     bottom: -100%;
+  }
+
+  .page-transition {
+    transition: all 0.5s ease-in;
+    left: 0;
+    opacity: 1;
+    position: relative;
+    top: 0;
+  }
+
+  .page-enter {
+    left: 100vw;
+    opacity: 0;
+  }
+
+  .page-leave {
+    display: none;
   }
 
   .toast-transition {
