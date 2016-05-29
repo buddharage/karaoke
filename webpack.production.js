@@ -7,14 +7,19 @@ module.exports = {
     app: './src/main.js'
   },
   output: {
-    path: './build',
-    publicPath: '/build/',
+    path: './public',
+    publicPath: '/public/',
     filename: 'bundle.js'
   },
   module: {
+    noParse: /node_modules\/json-schema\/lib\/validate\.js/,
+    preLoaders: [
+      { test: /\.js$/, exclude: /node_modules/, loader: 'jscs-loader' }
+    ],
     loaders: [
       { test: /\.vue$/, loader: 'vue' },
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel'},
+      { test: /\.json$/, loader: 'json'},
       { test: /\.(png|jpg)$/, loader: 'file' },
       { test: /\.(png|jpg)$/, loader: 'url?limit=10000'},
       { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
@@ -24,6 +29,12 @@ module.exports = {
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       { test: /\.scss$/, loaders: ['style', 'css', 'sass'] }
     ]
+  },
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
   },
   sassLoader: {
     includePaths: [
