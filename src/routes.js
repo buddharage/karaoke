@@ -9,7 +9,7 @@ import player from './components/player.vue';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  history: true,
+  history: Vue.config.debug,
   saveScrollPosition: true
 });
 
