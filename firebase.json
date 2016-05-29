@@ -3,12 +3,24 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "public",
+    "public": "./",
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**",
+    "**/src/**",
+    "config.sample.js",
+    "database.rules.json",
+    "package.json",
+    "readme.md",
+    "webpack.config.js",
+    "webpack.production.js"
+  ]
 }
