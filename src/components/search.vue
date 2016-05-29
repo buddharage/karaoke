@@ -126,8 +126,7 @@
         youtube.search().list({
           maxResults: 10,
           part: 'snippet',
-          // q: this.query + ' karaoke'
-          q: this.query,
+          q: this.query + ' karaoke',
           type: 'video'
         }).then((data) => {
           if(!data) {
