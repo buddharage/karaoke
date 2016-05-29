@@ -29,8 +29,8 @@
       <h5>{{ openedVideo.song.title }}</h5>
 
       <div class="options">
-        <button v-on:click.prevent="removeVideo" class="btn red">Remove Video</button>
-        <button v-on:click.prevent="moveVideoToNext" class="btn blue">Play Next</button>
+        <button v-on:click.prevent="removeVideo" class="btn red lighten-2">Remove Video</button>
+        <button v-on:click.prevent="moveVideoToNext" class="btn blue lighten-1">Play Next</button>
       </div>
     </div>
   </div>
@@ -89,40 +89,44 @@
        */
       moveVideoToNext() {
         var openedVideoKey = this.indexForKey(this.videos, this.openedVideo.key);
-        var newQueue = {};
 
         if(!openedVideoKey) {
           return;
         }
 
-        /**
-         *  Re-order on the local array
-         */
+        // Set a Firebase transfer to accomodate potential concurrent requests
+        this.db.ref('queue').transaction((video) => {
+          /**
+           *  Re-order on the local array
+           */
+          var newQueue = {};
 
-        // Delete from queue
-        this.videos.splice(openedVideoKey, 1);
+          // Delete from queue
+          this.videos.splice(openedVideoKey, 1);
 
-        // Add it to next in queue
-        this.videos.splice(1, 0, this.openedVideo);
 
-        /**
-         * Convert to a Firebase array that is indexed by the key
-         */
-        this.videos.forEach((video, index) => {
-          newQueue[video.key] = video;
+          // Add it to next in queue
+          this.videos.splice(1, 0, this.openedVideo);
+
+          /**
+           * Convert to a Firebase array that is indexed by the key
+           */
+          this.videos.forEach((video, index) => {
+            newQueue[video.key] = video;
+          });
+
+          // Replace the queue with the new ordered queue
+          this.db.ref().update({'queue': newQueue});
+
+          // Broadcast message
+          this.db.ref().update({
+            'message': this.openedVideo.song.title + ' moved up!'
+          });
+
+          // Close modal
+          this.isVideoModalOpen = false;
+          this.openedVideo = null;
         });
-
-        // Replace the queue with the new ordered queue
-        this.db.ref().update({'queue': newQueue});
-
-        // Broadcast message
-        this.db.ref().update({
-          'message': this.openedVideo.song.title + ' moved up!'
-        });
-
-        // Close modal
-        this.isVideoModalOpen = false;
-        this.openedVideo = null;
       },
       /**
        * openVideoModal() opens video-specific modal
@@ -178,6 +182,7 @@
     &:first-child {
       background: #ec407a;
       color: white;
+      margin-bottom: 10px;
       margin-left: 0;
       margin-right: 0;
       padding-bottom: 20px;
