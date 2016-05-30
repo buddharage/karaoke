@@ -30,25 +30,24 @@
           </div>
         </div>
       </div>
-
-      <div v-if="isConfirmModalOpen" class="modal bottom-sheet center" transition="modal">
-        <div v-if="videoToConfirm" class="modal-content">
-          <p>Who's singing</p>
-
-          <h5>{{ videoToConfirm.snippet.title }}?</h5>
-
-          <div class="input-field">
-            <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name"  id="input-performer">
-            <label class="active" for="input-performer">Performer</label>
-          </div>
-
-          <button v-on:click.prevent="addToQueue(videoToConfirm)" class="btn">Ok</button>
-        </div>
-      </div>
-
       <div v-if="isConfirmModalOpen" v-on:click="isConfirmModalOpen = false" transition="fade" class="overlay"></div>
 
       <loader :is-loading="isLoading"></loader>
+    </div>
+
+    <div v-if="isConfirmModalOpen" class="modal bottom-sheet center" transition="modal">
+      <div v-if="videoToConfirm" class="modal-content">
+        <p>Who's singing</p>
+
+        <h5>{{ videoToConfirm.snippet.title }}?</h5>
+
+        <div class="input-field">
+          <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name"  id="input-performer">
+          <label class="active" for="input-performer">Performer</label>
+        </div>
+
+        <button v-on:click.prevent="addToQueue(videoToConfirm)" class="btn">Ok</button>
+      </div>
     </div>
   </div>
 </template>
@@ -156,6 +155,10 @@
 </script>
 
 <style lang="sass" scoped>
+  .search-results.row {
+    margin-bottom: 0;
+  }
+
   .search-form {
     position: relative;
 

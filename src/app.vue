@@ -116,7 +116,7 @@
 
   .overlay {
     background: #000;
-    height: 100vh;
+    height: 100%;
     left: 0;
     position: fixed;
     top: 0;
@@ -130,7 +130,7 @@
   .fade-transition {
     transition: opacity 0.5s linear;
     display: block;
-    opacity: 1;
+    opacity: 0.5;
   }
 
   .fade-enter,
@@ -155,18 +155,11 @@
   }
 
   .page-transition {
-    left: 0;
-    min-height: 100vh;
     opacity: 1;
-    position: fixed;
-    top: 0;
-    transform: translateX(0);
     transition: all 0.8s ease-in;
-    width: 100vw;
   }
 
   .page-enter {
-    transform: translateX(100vw);
     opacity: 0;
   }
 
