@@ -1,51 +1,53 @@
 <template>
-  <div class="search-view container">
-    <div class="fixed-action-btn">
-      <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
-        style="bottom: 1%; right: 1%;"
-        v-link="'/'">
-        <i class="material-icons">clear</i>
-      </a>
-    </div>
-
-    <form v-on:submit.prevent="searchYT" class="search-form">
-      <div class="input-field">
-        <input v-model="query" v-el:search-Input type="text" placeholder="Search">
+  <div class="search-view">
+    <div class="container">
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
+          style="bottom: 1%; right: 1%;"
+          v-link="'/'">
+          <i class="material-icons">clear</i>
+        </a>
       </div>
 
-      <button class="search-submit-btn btn-floating btn-small waves-effect waves-light"><i class="material-icons">search</i></button>
-    </form>
-
-    <div class="search-results row">
-      <div v-for="video in videosResult" class="col s12 m6 l4">
-        <div v-on:click.prevent="confirmVideo(video)"class="card tiny">
-          <div class="card-image">
-            <img v-bind:src="video.snippet.thumbnails.high.url">
-          </div>
-
-          <div class="card-content">
-            <span class="card-title">{{ video.snippet.title }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div v-if="isConfirmModalOpen" class="modal bottom-sheet center" transition="modal">
-      <div v-if="videoToConfirm" class="modal-content">
-        <p>Who's singing</p>
-
-        <h5>{{ videoToConfirm.snippet.title }}?</h5>
-
+      <form v-on:submit.prevent="searchYT" class="search-form">
         <div class="input-field">
-          <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name"  id="input-performer">
-          <label class="active" for="input-performer">Performer</label>
+          <input v-model="query" v-el:search-Input type="text" placeholder="Search">
         </div>
 
-        <button v-on:click.prevent="addToQueue(videoToConfirm)" class="btn">Ok</button>
-      </div>
-    </div>
+        <button class="search-submit-btn btn-floating btn-small waves-effect waves-light"><i class="material-icons">search</i></button>
+      </form>
 
-    <div v-if="isConfirmModalOpen" v-on:click="isConfirmModalOpen = false" transition="fade" class="overlay"></div>
+      <div class="search-results row">
+        <div v-for="video in videosResult" class="col s12 m6 l4">
+          <div v-on:click.prevent="confirmVideo(video)"class="card tiny">
+            <div class="card-image">
+              <img v-bind:src="video.snippet.thumbnails.high.url">
+            </div>
+
+            <div class="card-content">
+              <span class="card-title">{{ video.snippet.title }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="isConfirmModalOpen" class="modal bottom-sheet center" transition="modal">
+        <div v-if="videoToConfirm" class="modal-content">
+          <p>Who's singing</p>
+
+          <h5>{{ videoToConfirm.snippet.title }}?</h5>
+
+          <div class="input-field">
+            <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name"  id="input-performer">
+            <label class="active" for="input-performer">Performer</label>
+          </div>
+
+          <button v-on:click.prevent="addToQueue(videoToConfirm)" class="btn">Ok</button>
+        </div>
+      </div>
+
+      <div v-if="isConfirmModalOpen" v-on:click="isConfirmModalOpen = false" transition="fade" class="overlay"></div>
+    </div>
   </div>
 </template>
 

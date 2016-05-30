@@ -155,15 +155,18 @@
   }
 
   .page-transition {
-    transition: all 0.5s ease-in;
     left: 0;
+    min-height: 100vh;
     opacity: 1;
-    position: relative;
+    position: fixed;
     top: 0;
+    transform: translateX(0);
+    transition: all 0.8s ease-in;
+    width: 100vw;
   }
 
   .page-enter {
-    left: 100vw;
+    transform: translateX(100vw);
     opacity: 0;
   }
 
