@@ -36,6 +36,7 @@ $navbar-height-mobile: 120px;
 @import "components/waves";
 @import "components/materialbox";
 @import "components/cards";
+@import "components/preloader";
 /**
 @import "components/toast";
 @import "components/tabs";
@@ -44,7 +45,6 @@ $navbar-height-mobile: 120px;
 @import "components/chips";
 @import "components/table_of_contents";
 @import "components/sideNav";
-@import "components/preloader";
 @import "components/slider";
 @import "components/carousel";
 @import "components/date_picker/default";

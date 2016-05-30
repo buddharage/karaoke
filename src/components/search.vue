@@ -47,6 +47,8 @@
       </div>
 
       <div v-if="isConfirmModalOpen" v-on:click="isConfirmModalOpen = false" transition="fade" class="overlay"></div>
+
+      <loader :is-loading="isLoading"></loader>
     </div>
   </div>
 </template>
@@ -54,6 +56,7 @@
 <script>
   import api from 'youtube-api-simple';
   import config from '../../config';
+  import loader from './loader.vue';
   import log from '../helpers/log';
 
   // Set Youtube API object
@@ -63,9 +66,13 @@
   });
 
   export default {
+    components: {
+      'loader': loader
+    },
     data() {
       return {
         isConfirmModalOpen: false,
+        isLoading: false,
         videoToConfirm: null,
         query: '',
         performer: 'someone',
@@ -125,6 +132,8 @@
        * @return {Object}   List of videos
        */
       searchYT() {
+        this.isLoading = true;
+
         youtube.search().list({
           maxResults: 10,
           part: 'snippet',
@@ -134,6 +143,8 @@
           if(!data) {
             return;
           }
+
+          this.isLoading = false;
 
           // Parse search results
           // and show in Vue
