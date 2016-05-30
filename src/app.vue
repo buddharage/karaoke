@@ -3,8 +3,8 @@
     <router-view
       :current-video="currentVideo"
       :db="db"
+      keep-alive
       transition="page"
-      transition-mode="out-in"
       :videos="videos"></router-view>
 
       <div v-if="message" transition="toast" v-on:click.prevent="message = null" class="btn message pink ligthen-1">
@@ -155,16 +155,20 @@
   }
 
   .page-transition {
-    opacity: 1;
-    transition: all 0.8s ease-in;
+    left: 0;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    transition: left 0.5s;
+    width: 100vw;
   }
 
   .page-enter {
-    opacity: 0;
+    left: 100vw;
   }
 
   .page-leave {
-    display: none;
+    left: -100vw;
   }
 
   .toast-transition {

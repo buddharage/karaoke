@@ -11,7 +11,7 @@
 
       <form v-on:submit.prevent="searchYT" class="search-form">
         <div class="input-field">
-          <input v-model="query" v-el:search-Input type="text" placeholder="Search">
+          <input v-model="query" v-el:search-input type="text" placeholder="Search">
         </div>
 
         <button class="search-submit-btn btn-floating btn-small waves-effect waves-light"><i class="material-icons">search</i></button>
@@ -86,6 +86,20 @@
     ready() {
       // Focus on search input
       this.$els.searchInput.focus();
+    },
+    route: {
+      // Executes after transition
+      activate(transition) {
+        // Reset search
+        this.query = '';
+        this.videosResult = [];
+
+        // Focus on search input
+        this.$els.searchInput.focus();
+
+        // Continue
+        transition.next();
+      }
     },
     methods: {
       /**
