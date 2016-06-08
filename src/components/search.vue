@@ -41,12 +41,14 @@
 
         <h5>{{ videoToConfirm.snippet.title }}?</h5>
 
-        <div class="input-field">
-          <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name"  id="input-performer">
-          <label class="active" for="input-performer">Performer</label>
-        </div>
+        <form v-on:submit.prevent="addToQueue(videoToConfirm)">
+          <div class="input-field">
+            <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name" id="input-performer" lazy>
+            <label class="active" for="input-performer">Performer</label>
+          </div>
 
-        <button v-on:click.prevent="addToQueue(videoToConfirm)" class="btn">Ok</button>
+          <button class="btn">Ok</button>
+        </form>
       </div>
     </div>
   </div>
@@ -94,8 +96,7 @@
         this.query = '';
         this.videosResult = [];
 
-        // Focus on search input
-        this.$els.searchInput.focus();
+        this.isConfirmModalOpen = false;
 
         // Continue
         transition.next();
@@ -121,8 +122,6 @@
             title: video.snippet.title
           }
         }).then(() => {
-          this.isConfirmModalOpen = false;
-
           // Redirect to queue view
           this.$route.router.go({name: 'queue'})
 
@@ -158,6 +157,8 @@
           }
 
           this.isLoading = false;
+
+          this.$els.searchInput.blur();
 
           // Parse search results
           // and show in Vue
