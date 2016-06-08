@@ -5,6 +5,7 @@
       :db="db"
       keep-alive
       transition="page"
+      transition-mode="out-in"
       :videos="videos"></router-view>
 
       <div v-if="message" transition="toast" v-on:click.prevent="message = null" class="btn message pink ligthen-1">
@@ -159,16 +160,16 @@
     min-height: 100vh;
     position: absolute;
     top: 0;
-    transition: left 0.5s;
+    transition: all 0.3s ease-in;
     width: 100vw;
   }
 
   .page-enter {
-    left: 100vw;
+    transform: translate3d(100vw, 0, 0);
   }
 
   .page-leave {
-    left: -100vw;
+    opacity: 0;
   }
 
   .toast-transition {
