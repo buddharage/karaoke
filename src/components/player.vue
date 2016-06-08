@@ -167,7 +167,7 @@
           var position = snapshot.val();
 
           // Set starting position
-          if(position) {
+          if(position > 10) {
             youtubeOpts.playerVars.start = position;
 
             // Check if player should be playing
@@ -181,6 +181,10 @@
               this.player = new YT.Player('mainPlayer', youtubeOpts);
             });
           } else {
+            // reset player
+            this.db.ref().update({videoPosition: 0});
+            this.db.ref().update({isPlaying: false});
+
             // Set up player to #mainPlayer element
             this.player = new YT.Player('mainPlayer', youtubeOpts);
           }
