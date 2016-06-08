@@ -56,7 +56,7 @@
 
           this.player.cueVideoById(currentVideo.song.id);
 
-          if(this.videos.length > 1) {
+          if(this.videos.length > 0) {
             // Show preview for 10 seconds before playing video
             setTimeout(() => {
               // Update Firebase with playback status
