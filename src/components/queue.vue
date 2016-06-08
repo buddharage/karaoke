@@ -189,6 +189,7 @@
       margin-left: 0;
       margin-right: 0;
       padding-bottom: 20px;
+      padding-right: 62px;
       padding-top: 20px;
       font-size: 28px;
       font-weight: 200;
