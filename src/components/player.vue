@@ -217,8 +217,8 @@
 <style lang="sass" scoped>
   .preview {
     align-items: center;
-    background: coral;
-    color: white;
+    background: black;
+    color: #ba68c8;
     display: flex;
     flex-direction: column;
     height: 100vh;
