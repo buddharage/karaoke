@@ -251,8 +251,8 @@
   .no-videos {
     align-items: center;
     display: flex;
-    color: coral;
-    font-weight: 700;
+    color: #ec407a;
+    font-weight: 200;
     height: 100vh;
     justify-content: center;
     margin-top: 0;
