@@ -1,5 +1,5 @@
 export default function() {
   if(process.env.NODE_ENV !== 'production') {
-    console.log.apply(this, arguments);
+    console.log.apply(console, arguments);
   }
 }
