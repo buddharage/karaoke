@@ -53,6 +53,7 @@
         // the newVal[0] and oldVal[0]
         if(currentVideo && newVal !== oldVal) {
           this.db.ref().update({isPlaying: false});
+          this.db.ref().update({videoPosition: 0});
 
           this.player.cueVideoById(currentVideo.song.id);
 
