@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --quiet",
+    "dev": "webpack-dev-server --inline --hot",
     "build": "rm -rf public/* && webpack --progress --hide-modules --config webpack.production.js"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "json-loader": "^0.5.4",
     "materialize-css": "^0.97.6",
     "node-sass": "^3.7.0",
+    "offline-plugin": "^3.3.1",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",

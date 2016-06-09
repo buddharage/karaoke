@@ -1,5 +1,6 @@
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var OfflinePlugin = require('offline-plugin');
 var path = require('path');
 
 module.exports = {
@@ -55,7 +56,9 @@ module.exports = {
     }),
     new ExtractTextPlugin('[name].min.css', {
       allChunks: true
-    })
+    }),
+    // Usually good to put this plugin last
+    new OfflinePlugin()
   ],
   vue: {
     loaders: {
