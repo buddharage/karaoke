@@ -8,8 +8,6 @@ import './styles/main.scss';
 
 import offlinePlugin from 'offline-plugin/runtime';
 
-console.log(offlinePlugin);
-
 // Service worker
 offlinePlugin.install();
 

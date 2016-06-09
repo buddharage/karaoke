@@ -1,5 +1,4 @@
 var path = require('path');
-var OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   entry: {
@@ -41,9 +40,5 @@ module.exports = {
       path.resolve(__dirname, "./src/styles")
     ]
   },
-  devtool: '#source-map',
-  plugins: [
-    // Usually good to put this plugin last
-    new OfflinePlugin()
-  ],
+  devtool: '#source-map'
 }
