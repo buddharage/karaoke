@@ -58,7 +58,10 @@ module.exports = {
       allChunks: true
     }),
     // Usually good to put this plugin last
-    new OfflinePlugin()
+    new OfflinePlugin({
+      publicPath: '/public/',
+      relativePaths: false
+    })
   ],
   vue: {
     loaders: {

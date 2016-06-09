@@ -1,3 +1,4 @@
+var OfflinePlugin = require('offline-plugin');
 var path = require('path');
 
 module.exports = {
@@ -40,5 +41,12 @@ module.exports = {
       path.resolve(__dirname, "./src/styles")
     ]
   },
-  devtool: '#source-map'
+  devtool: '#source-map',
+  plugins: [
+    // Usually good to put this plugin last
+    new OfflinePlugin({
+      publicPath: '/public/',
+      relativePaths: false
+    })
+  ]
 }
