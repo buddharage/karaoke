@@ -134,6 +134,11 @@
 
         var key = this.currentVideo.key;
 
+        if(this.videos.length === 1) {
+          // Update Firebase with playback status
+          this.db.ref().update({isPlaying: false});
+        }
+
         // remove first item in array
         this.db.ref('queue/' + key).remove(() => log('%c removed', 'color: red', key));
       },

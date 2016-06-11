@@ -33,7 +33,7 @@
     ],
     ready() {
       // Set playback status
-      this.db.ref('isPlaying').once('value').then((snapshot) => {
+      this.db.ref('isPlaying').on('value', (snapshot) => {
           this.isPlaying = snapshot.val();
       });
     },
