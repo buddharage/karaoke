@@ -148,6 +148,7 @@
        * @return {Object}   List of videos
        */
       searchYT() {
+        // Modify query if not on production, i.e. show non-karaoke videos
         var query = process.env.NODE_ENV !== 'production' ? this.query : this.query + 'karaoke';
 
         this.isLoading = true;
