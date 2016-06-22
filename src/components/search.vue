@@ -148,12 +148,14 @@
        * @return {Object}   List of videos
        */
       searchYT() {
+        var query = process.env.NODE_ENV !== 'production' ? this.query : this.query + 'karaoke';
+
         this.isLoading = true;
 
         youtube.search().list({
           maxResults: 10,
           part: 'snippet',
-          q: this.query + ' karaoke',
+          q: query,
           type: 'video'
         }).then((data) => {
           if(!data) {
