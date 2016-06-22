@@ -90,6 +90,7 @@
        * moveVideoToNext() moves the video to the front of the queue
        */
       moveVideoToNext() {
+        var _tempArr = this.videos.map((val) => val);
         var openedVideoKey = this.indexForKey(this.videos, this.openedVideo.key);
 
         if(!openedVideoKey) {
@@ -97,28 +98,26 @@
         }
 
         // Set a Firebase transfer to accomodate potential concurrent requests
-        this.db.ref('queue').transaction((video) => {
+        this.db.ref('queue').transaction((queue) => {
           /**
-           *  Re-order on the local array
+           *  Re-order on temporary array
            */
-          var newQueue = {};
-
           // Delete from queue
-          this.videos.splice(openedVideoKey, 1);
+          _tempArr.splice(openedVideoKey, 1);
 
 
           // Add it to next in queue
-          this.videos.splice(1, 0, this.openedVideo);
+          _tempArr.splice(1, 0, this.openedVideo);
 
           /**
-           * Convert to a Firebase array that is indexed by the key
+           * Change priorities for each video
            */
-          this.videos.forEach((video, index) => {
-            newQueue[video.key] = video;
+          _tempArr.forEach((video, index) => {
+            log('changing priority for ', video.song.title);
+            log('with priority ', index + 1);
+            this.db.ref('queue/' + video.key).setPriority(index + 1);
           });
 
-          // Replace the queue with the new ordered queue
-          this.db.ref().update({'queue': newQueue});
 
           // Broadcast message
           this.db.ref().update({

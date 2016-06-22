@@ -1,3 +1,5 @@
+import log from '../helpers/log';
+
 var Vue // late binding
 
 /**
@@ -90,23 +92,48 @@ function bindAsArray (vm, key, source, cancelCallback) {
   vm[key] = array;
 
   var onAdd = source.on('child_added', (snapshot) => {
+    log('%c CHILD ADDED EVENT', 'color: red');
     array.push(createRecord(snapshot));
   }, cancelCallback);
 
   var onRemove = source.on('child_removed', (snapshot) => {
+    log('%c CHILD REMOVED EVENT', 'color: red');
     var index = indexForKey(array, snapshot.key);
     array.splice(index, 1);
   }, cancelCallback)
 
   var onChange = source.on('child_changed', (snapshot) => {
+    log('%c CHILD CHANGED EVENT', 'color: red');
     var index = indexForKey(array, snapshot.key);
     array.splice(index, 1, createRecord(snapshot));
+  }, cancelCallback);
+
+  var onMove = source.on('child_moved', (snapshot, prevKey) => {
+    log('%c CHILD MOVED EVENT', 'color: red');
+
+    log('%c getting snapshot key', 'color: hotpink', snapshot.key);
+    log('%c getting snapshot priority', 'color: hotpink', snapshot.getPriority());
+    log('%c indexForKey() %c array: ', 'color: coral', 'color: white', array);
+    log('%c indexForKey() %c key: ', 'color: coral', 'color: white', snapshot.key);
+    var index = indexForKey(array, snapshot.key);
+    var record = array.splice(index, 1)[0];
+
+    log('%c getting previous key', 'color: hotpink', prevKey);
+    log('%c indexForKey() %c array: ', 'color: coral', 'color: white', array);
+    log('%c indexForKey() %c key: ', 'color: coral', 'color: white', prevKey);
+    var newIndex = prevKey ? indexForKey(array, prevKey) + 1 : 0;
+
+    log('%c indexForKey value for previous key', 'color: coral', indexForKey(array, prevKey));
+    log('%c new index value', 'color: coral', newIndex);
+
+    array.splice(newIndex, 0, record);
   }, cancelCallback);
 
   vm._firebaseListeners[key] = {
     child_added: onAdd,
     child_removed: onRemove,
-    child_changed: onChange
+    child_changed: onChange,
+    child_moved: onMove
   };
 }
 

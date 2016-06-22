@@ -115,13 +115,17 @@
 
         log('adding this video: ', video);
 
-        this.db.ref('queue').push({
+        // Generate Firebase item key
+        var key = this.db.ref('queue').push().key;
+
+        // Set the key with a value and a priority
+        this.db.ref('queue/' + key).setWithPriority({
           performer: this.performer,
           song: {
             id: video.id.videoId,
             title: video.snippet.title
           }
-        }).then(() => {
+        }, this.videos.length + 1).then(() => {
           // Redirect to queue view
           this.$route.router.go({name: 'queue'})
 

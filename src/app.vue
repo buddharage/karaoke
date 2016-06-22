@@ -41,7 +41,8 @@
         message: '',
         showMessage: false,
         videos: {
-          source: firebaseRef.database().ref('queue')
+          asObject: false,
+          source: firebaseRef.database().ref('queue').orderByPriority()
         }
       }
     },
