@@ -7,7 +7,7 @@
       ></controls>
 
     <div v-if="videos && videos.length" class="fixed-action-btn">
-      <a class="btn-floating btn-large waves-effect waves-light green btn-floating"
+      <a class="btn-floating btn-large waves-effect waves-light purple darken-1 btn-floating"
         style="bottom: 1%; right: 1%;"
         v-link="'/search'">
         <i class="material-icons">queue_music</i>

@@ -158,14 +158,11 @@
 
   .page-transition {
     background: white;
-    bottom: 0;
     left: 0;
     min-height: 100vh;
     opacity: 1;
     position: absolute;
-    right: 0;
     top: 0;
-    transform: translate3d(0, 0, 0);
     transition: all 0.3s ease;
     width: 100vw;
   }
