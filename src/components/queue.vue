@@ -170,28 +170,30 @@
 </script>
 
 <style lang="sass" scoped>
-  .collection .collection-item {
-    cursor: pointer;
-    line-height: 1.3em;
-    margin-left: 0.6rem;
-    margin-right: 0.6rem;
+  .collection {
+    border: none;
 
-    .performer-name {
-      text-transform: capitalize;
-    }
+    .collection-item {
+      cursor: pointer;
+      line-height: 1.3em;
 
-    &:first-child {
-      background: #ec407a;
-      color: white;
-      cursor: default;
-      margin-bottom: 10px;
-      margin-left: 0;
-      margin-right: 0;
-      padding-bottom: 20px;
-      padding-right: 62px;
-      padding-top: 20px;
-      font-size: 28px;
-      font-weight: 200;
+      .performer-name {
+        text-transform: capitalize;
+      }
+
+      &:first-child {
+        background: #f06292;
+        color: white;
+        cursor: default;
+        margin-bottom: 10px;
+        margin-left: 0;
+        margin-right: 0;
+        padding-bottom: 20px;
+        padding-right: 62px;
+        padding-top: 20px;
+        font-size: 28px;
+        font-weight: 200;
+      }
     }
   }
 

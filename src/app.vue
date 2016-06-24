@@ -117,7 +117,7 @@
   }
 
   .overlay {
-    background: #000;
+    background: white;
     height: 100%;
     left: 0;
     position: fixed;
@@ -132,7 +132,7 @@
   .fade-transition {
     transition: opacity 0.5s linear;
     display: block;
-    opacity: 0.5;
+    opacity: 0.6;
   }
 
   .fade-enter,
@@ -157,16 +157,22 @@
   }
 
   .page-transition {
+    background: white;
+    bottom: 0;
     left: 0;
     min-height: 100vh;
+    opacity: 1;
     position: absolute;
+    right: 0;
     top: 0;
-    transition: all 0.3s ease-in;
+    transform: translate3d(0, 0, 0);
+    transition: all 0.3s ease;
     width: 100vw;
   }
 
   .page-enter {
-    transform: translate3d(100vw, 0, 0);
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
   }
 
   .page-leave {

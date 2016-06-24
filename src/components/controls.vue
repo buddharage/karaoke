@@ -1,11 +1,11 @@
 <template>
   <div class="navbar-fixed" v-if="videos.length">
-    <nav class="controls center grey darken-4 z-depth-1">
+    <nav class="controls center white z-depth-1">
       <button v-on:click.prevent="replayVideo" class="btn-floating btn-medium waves-effect waves-light transparent z-depth-0">
         <i class="material-icons">replay</i>
       </button>
 
-      <button v-on:click.prevent="togglePlayback" class="btn-floating btn-large waves-effect waves-light pink ligthen-1">
+      <button v-on:click.prevent="togglePlayback" class="btn-floating btn-large waves-effect waves-light pink lighten-2">
         <i v-if="isPlaying" class="material-icons">pause</i>
         <i v-else class="material-icons">play_arrow</i>
       </button>
@@ -65,9 +65,11 @@
 
 <style lang="sass" scoped>
   nav i.material-icons {
+    color: black;
     height: auto;
     line-height: 1em;
   }
+
 
   button {
     margin: 0 3%;
