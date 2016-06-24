@@ -1,6 +1,6 @@
 <template>
   <div class="queue-view">
-    <controls v-if="videos.length"
+    <controls
       :db="db"
       :videos="videos"
       :current-video="currentVideo"

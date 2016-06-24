@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-fixed">
+  <div class="navbar-fixed" v-if="videos.length">
     <nav class="controls center grey darken-4 z-depth-1">
       <button v-on:click.prevent="replayVideo" class="btn-floating btn-medium waves-effect waves-light transparent z-depth-0">
         <i class="material-icons">replay</i>
