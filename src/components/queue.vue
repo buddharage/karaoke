@@ -6,11 +6,11 @@
       :current-video="currentVideo"
       ></controls>
 
-    <div class="fixed-action-btn">
+    <div v-if="videos && videos.length" class="fixed-action-btn">
       <a class="btn-floating btn-large waves-effect waves-light green btn-floating"
         style="bottom: 1%; right: 1%;"
         v-link="'/search'">
-        <i class="material-icons">search</i>
+        <i class="material-icons">queue_music</i>
       </a>
     </div>
 
@@ -21,8 +21,10 @@
     </ul>
 
     <div v-else class="no-songs center">
-      <p>No videos are in queue.<p>
-      <a  v-link="'/search'"class="btn green">Let's do this!</a>
+      <div class="no-songs-content">
+        <p>Put some songs in!<p>
+        <a v-link="'/search'"class="btn-floating btn-large purple darken-1 z-depth-2"><i class="material-icons">queue_music</i></a>
+      </div>
     </div>
 
     <div v-if="isVideoModalOpen" class="modal bottom-sheet center" transition="modal">
@@ -215,6 +217,39 @@
       }
     }
   }
+
+  .no-songs {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+
+    .no-songs-content {
+      width: 100%;
+    }
+
+    p {
+      font-size: 64px;
+      font-weight: 200;
+      margin: 0;
+
+      &:first-child {
+        line-height: 1.1em;
+        margin-bottom: 0.6em;
+      }
+    }
+
+    .btn-large {
+      height: 300px;
+      width: 300px;
+
+      i {
+        font-size: 120px;
+        line-height: 300px;
+      }
+    }
+  }
+
   /** Custom VueJS animations **/
   .append-transition {
     opacity: 1;
