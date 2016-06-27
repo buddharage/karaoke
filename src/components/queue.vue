@@ -240,12 +240,12 @@
     }
 
     .btn-large {
-      height: 300px;
-      width: 300px;
+      height: 250px;
+      width: 250px;
 
       i {
         font-size: 120px;
-        line-height: 300px;
+        line-height: 250px;
       }
     }
   }
