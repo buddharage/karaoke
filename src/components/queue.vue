@@ -10,7 +10,7 @@
       <a class="btn-floating btn-large waves-effect waves-light purple darken-1 btn-floating"
         style="bottom: 1%; right: 1%;"
         v-link="'/search'">
-        <i class="material-icons">queue_music</i>
+        <i class="material-icons">playlist_add</i>
       </a>
     </div>
 
@@ -23,7 +23,7 @@
     <div v-else class="no-songs center">
       <div class="no-songs-content">
         <p>Put some songs in!<p>
-        <a v-link="'/search'"class="btn-floating btn-large purple darken-1 z-depth-2"><i class="material-icons">queue_music</i></a>
+        <a v-link="'/search'"class="btn-floating btn-large purple darken-1 z-depth-2"><i class="material-icons">playlist_add</i></a>
       </div>
     </div>
 
