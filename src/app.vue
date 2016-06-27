@@ -5,7 +5,6 @@
       :db="db"
       keep-alive
       transition="page"
-      transition-mode="out-in"
       :videos="videos"></router-view>
 
       <div v-if="message" transition="toast" v-on:click.prevent="message = null" class="btn message pink ligthen-1">
