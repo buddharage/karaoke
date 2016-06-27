@@ -98,6 +98,12 @@
 
         if(position === 0) {
           this.player.seekTo(0);
+
+          this.db.ref('isPlaying').on('value', (snapshot) => {
+            if(!snapshot.val()) {
+              this.player.pauseVideo();
+            }
+          })
         }
       },
       /**
