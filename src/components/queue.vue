@@ -23,7 +23,7 @@
     <div v-else class="no-songs center">
       <div class="no-songs-content">
         <p>Put some songs in!<p>
-        <a v-link="'/search'"class="btn-floating btn-large purple darken-1 z-depth-2"><i class="material-icons">playlist_add</i></a>
+        <a v-link="'/search'"class="btn-floating btn-large purple darken-1 z-depth-4"><i class="material-icons">playlist_add</i></a>
       </div>
     </div>
 
@@ -187,7 +187,7 @@
         background: #f06292;
         color: white;
         cursor: default;
-        margin-bottom: 10px;
+        margin-bottom: 0;
         margin-left: 0;
         margin-right: 0;
         padding-bottom: 20px;
