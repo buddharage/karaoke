@@ -3,7 +3,6 @@
     <router-view
       :current-video="currentVideo"
       :db="db"
-      keep-alive
       transition="page"
       :videos="videos"></router-view>
 
