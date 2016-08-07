@@ -51,6 +51,10 @@
         // When a new video is loaded, the first one is removed.
         // Therefore, the first items should be different from
         // the newVal[0] and oldVal[0]
+        log('currentVideo', currentVideo.song.title);
+        log('newVal', newVal.song.title);
+        log('oldVal', oldVal.song.title);
+
         if(currentVideo && newVal !== oldVal) {
           this.db.ref().update({isPlaying: false});
           this.db.ref().update({videoPosition: 0});
