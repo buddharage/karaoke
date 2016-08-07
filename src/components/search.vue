@@ -149,7 +149,9 @@
        */
       searchYT() {
         // Modify query if not on production, i.e. show non-karaoke videos
-        var query = process.env.NODE_ENV !== 'production' ? this.query : this.query + 'karaoke';
+        var query = process.env.NODE_ENV !== 'production' || this.$route.query.all ? this.query : this.query + 'karaoke';
+
+        log('query all?', this.$route.query.all);
 
         this.isLoading = true;
 

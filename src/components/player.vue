@@ -47,15 +47,15 @@
 
         var currentVideo = this.videos[0];
 
-        // Current video should be the first item.
-        // When a new video is loaded, the first one is removed.
-        // Therefore, the first items should be different from
-        // the newVal[0] and oldVal[0]
-        log('currentVideo', currentVideo.song.title);
-        log('newVal', newVal.song.title);
-        log('oldVal', oldVal.song.title);
+        var isFirstVideo = !oldVal && newVal !== oldVal;
 
-        if(currentVideo && newVal !== oldVal) {
+        var isDifferentSong = oldVal && newVal && newVal.song.id !== oldVal.song.id;
+
+        if(currentVideo && (isFirstVideo || isDifferentSong)) {
+          log('currentVideo', currentVideo.song.id);
+          log('newVal %c', 'color: aquamarine', newVal);
+          log('oldVal %c', 'color: aquamaring', oldVal);
+
           this.db.ref().update({isPlaying: false});
           this.db.ref().update({videoPosition: 0});
 
@@ -136,11 +136,13 @@
        * playNext() plays next video in queue
        */
       playNext() {
-        this.db.ref().update({videoPosition: 0});
-
-        if(!this.currentVideo) {
+        if(!this.currentVideo || !this.videos.length) {
           return;
         }
+
+        log('playing next');
+
+        this.db.ref().update({videoPosition: 0});
 
         var key = this.currentVideo.key;
 
