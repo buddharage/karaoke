@@ -159,7 +159,8 @@
           maxResults: 10,
           part: 'snippet',
           q: query,
-          type: 'video'
+          type: 'video',
+          videoEmbeddable: true
         }).then((data) => {
           if(!data) {
             return;
