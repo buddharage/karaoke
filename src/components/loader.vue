@@ -46,6 +46,7 @@
 
 <script>
   export default {
+    name: 'controls',
     props: {
       'isLoading': {
         default: false

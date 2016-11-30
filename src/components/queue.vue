@@ -7,38 +7,43 @@
       ></controls>
 
     <div v-if="videos && videos.length" class="fixed-action-btn">
-      <a class="btn-floating btn-large waves-effect waves-light purple darken-1 btn-floating"
-        style="bottom: 1%; right: 1%;"
-        v-link="{ name: 'search' }">
+      <router-link to="/search" class="btn-floating btn-large waves-effect waves-light purple darken-1 btn-floating"
+        style="bottom: 1%; right: 1%;">
         <i class="material-icons">playlist_add</i>
-      </a>
+      </router-link>
     </div>
 
     <ul v-if="videos && videos.length" class="collection">
-      <li v-for="(index, video) in videos" v-on:click="openVideoModal(video)" track-by="key" transition="append" class="collection-item">
-          <span class="performer-name">{{ video.performer }}</span> - {{ video.song.title }} <i v-if="index === 0 && isPlaying" class="equalizer"></i>
-      </li>
+      <transition-group name="append">
+        <li v-for="(video, index) in videos" v-on:click="openVideoModal(video)" :key="video.key" class="collection-item">
+            <span class="performer-name">{{ video.performer }}</span> - {{ video.song.title }} <i v-if="index === 0 && isPlaying" class="equalizer"></i>
+        </li>
+      </transition-group>
     </ul>
 
     <div v-else class="no-songs center">
       <div class="no-songs-content">
         <p>Put some songs in!<p>
-        <a v-link="'/search'"class="btn-floating btn-large purple darken-1 z-depth-4"><i class="material-icons">playlist_add</i></a>
+        <router-link to="/search"class="btn-floating btn-large purple darken-1 z-depth-4"><i class="material-icons">playlist_add</i></router-link>
       </div>
     </div>
 
-    <div v-if="isVideoModalOpen" class="modal bottom-sheet center" transition="modal">
-      <div v-if="openedVideo" class="modal-content">
-        <h5>{{ openedVideo.song.title }}</h5>
+    <transition name="modal">
+      <div v-if="isVideoModalOpen" class="modal bottom-sheet override center">
+        <div v-if="openedVideo" class="modal-content">
+          <h5>{{ openedVideo.song.title }}</h5>
 
-        <div class="options">
-          <button v-on:click.prevent="removeVideo" class="btn red lighten-2">Remove Video</button>
-          <button v-on:click.prevent="moveVideoToNext" class="btn blue lighten-1">Play Next</button>
+          <div class="options">
+            <button v-on:click.prevent="removeVideo" class="btn red lighten-2">Remove Video</button>
+            <button v-on:click.prevent="moveVideoToNext" class="btn blue lighten-1">Play Next</button>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
 
-    <div v-if="isVideoModalOpen" v-on:click="isVideoModalOpen = false" transition="fade" class="overlay"></div>
+    <transition name="fade">
+      <div v-if="isVideoModalOpen" v-on:click="isVideoModalOpen = false"  class="overlay"></div>
+    </transition>
   </div>
 </template>
 
@@ -47,6 +52,7 @@
   import log from '../helpers/log';
 
   export default {
+    name: 'queue',
     components: {
       'controls': controls
     },
@@ -62,7 +68,7 @@
       'db',
       'videos'
     ],
-    ready() {
+    mounted() {
       // Bind Firebase events to player
       this.db.ref('isPlaying').on('value', (snapshot) => {
           this.isPlaying = snapshot.val();
@@ -178,6 +184,9 @@
     .collection-item {
       cursor: pointer;
       line-height: 1.3em;
+      perspective: 100px;
+      transform: none;
+      transition: transform 0.5s cubic-bezier(.36,-0.64,.34,1.76);
 
       .performer-name {
         text-transform: capitalize;
@@ -251,15 +260,8 @@
   }
 
   /** Custom VueJS animations **/
-  .append-transition {
-    opacity: 1;
-    perspective: 100px;
-    transform: none;
-    transition: transform 0.5s cubic-bezier(.36,-0.64,.34,1.76);
-  }
-
   .append-enter,
-  .append-leave {
+  .append-leave-active {
     opacity: 0;
     transform: rotateX(-90deg);
   }

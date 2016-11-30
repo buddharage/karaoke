@@ -191,7 +191,7 @@ function ensureRefs(vm) {
 }
 
 var mixin = {
-  ready() {
+  mounted() {
     var bindings = this.$data;
 
     if (!bindings) {

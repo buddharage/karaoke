@@ -1,14 +1,17 @@
 <template>
   <div class="main">
-    <router-view
-      :current-video="currentVideo"
-      :db="db"
-      transition="page"
-      :videos="videos"></router-view>
+    <transition name="page">
+      <router-view
+        :current-video="currentVideo"
+        :db="db"
+        :videos="videos"></router-view>
+    </transition>
 
-      <div v-if="message" transition="toast" v-on:click.prevent="message = null" class="btn message pink ligthen-1">
+    <transition name="toast">
+      <div v-if="message" v-on:click.prevent="message = null" class="btn message pink ligthen-1">
         <span>{{ message }}</span>
       </div>
+    </transition>
   </div>
 </template>
 
@@ -18,12 +21,14 @@
   import firebaseMixin from './mixins/firebase';
   import 'firebase/database';
   import log from './helpers/log.js';
+  import router from './routes';
 
   var firebaseRef = Firebase.initializeApp(config.firebase);
 
   export default {
+    name: 'app',
+    router,
     mixins: [firebaseMixin],
-    replace: false,
     computed: {
       currentVideo() {
         if(this.videos.length) {
@@ -44,8 +49,9 @@
         }
       }
     },
-    ready() {
+    mounted() {
       this.bindFirebaseEvents();
+      log('app mounted() this.videos: ', this.videos);
     },
     methods: {
       /**
@@ -92,10 +98,32 @@
     display: none;
   }
 
+  .main {
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+
+  .queue-view,
+  .search-view {
+    background: white;
+    left: 0;
+    min-height: 100vh;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+  }
+
   .message {
+    bottom: 1rem;
+    left: 50%;
     max-width: 80%;
     z-index: 1000;
     width: auto;
+    opacity: 1;
+    position: fixed;
+    transform: translateX(-50%);
 
     &.btn {
       height: auto;
@@ -116,8 +144,10 @@
 
   .overlay {
     background: white;
+    display: block;
     height: 100%;
     left: 0;
+    opacity: 0.6;
     position: fixed;
     top: 0;
     width: 100vw;
@@ -127,64 +157,49 @@
   /**
    * Custom VueJS Animations
    */
-  .fade-transition {
+  .fade-enter-active,
+  .fade-leave-active {
     transition: opacity 0.5s linear;
-    display: block;
-    opacity: 0.6;
   }
 
   .fade-enter,
-  .fade-leave {
+  .fade-leave-active {
     opacity: 0;
   }
 
-  .modal.bottom-sheet.modal-transition,
-  .modal-transition {
+  .modal.bottom-sheet.override {
     bottom: 0;
     display: block;
     max-height: 100%;
-    transition: all 0.5s ease-out;
     z-index: 1000;
   }
 
-  .modal.bottom-sheet.modal-leave,
+  .modal.bottom-sheet.modal-enter-active,
+  .modal-enter-active {
+    transition: all 0.5s ease-out;
+  }
+
   .modal.bottom-sheet.modal-enter,
+  .modal.bottom-sheet.modal-leave-active,
   .modal-leave,
   .modal-enter {
     bottom: -100%;
   }
 
-  .page-transition {
-    background: white;
-    left: 0;
-    min-height: 100vh;
-    opacity: 1;
-    position: absolute;
-    top: 0;
+  .page-enter-active {
+    position: fixed;
     transition: all 0.3s ease;
-    width: 100vw;
   }
 
   .page-enter {
     opacity: 0;
     transform: translate3d(100%, 0, 0);
-  }
-
-  .page-leave {
-    opacity: 0;
-  }
-
-  .toast-transition {
-    bottom: 1rem;
-    left: 50%;
-    opacity: 1;
-    position: fixed;
-    transform: translateX(-50%);
-    transition: all 2s ease-out;
+    z-index: 99999;
   }
 
   .toast-enter,
-  .toast-leave {
+  .toast-leave-active {
+    transition: all 2s ease-out;
     bottom: -100%;
     opacity: 0;
   }

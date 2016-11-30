@@ -21,6 +21,7 @@
   import log from '../helpers/log';
 
   export default {
+    name: 'controls',
     data() {
       return {
         isPlaying: false
@@ -31,7 +32,7 @@
       'db',
       'videos'
     ],
-    ready() {
+    mounted() {
       // Set playback status
       this.db.ref('isPlaying').on('value', (snapshot) => {
           this.isPlaying = snapshot.val();

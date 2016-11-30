@@ -2,16 +2,15 @@
   <div class="search-view">
     <div class="container">
       <div class="fixed-action-btn">
-        <a class="btn-floating btn-large waves-effect waves-light red btn-floating"
-          style="bottom: 1%; right: 1%;"
-          v-link="'/'">
+        <router-link to="/" class="btn-floating btn-large waves-effect waves-light red btn-floating"
+          style="bottom: 1%; right: 1%;">
           <i class="material-icons">clear</i>
-        </a>
+        </router-link>
       </div>
 
       <form v-on:submit.prevent="searchYT" class="search-form">
         <div class="input-field">
-          <input v-model="query" v-el:search-input type="text" placeholder="Search">
+          <input v-model="query" ref="search-input" type="text" placeholder="Search">
         </div>
 
         <button class="search-submit-btn btn-floating btn-small waves-effect waves-light"><i class="material-icons">search</i></button>
@@ -30,27 +29,32 @@
           </div>
         </div>
       </div>
-      <div v-if="isConfirmModalOpen" v-on:click="isConfirmModalOpen = false" transition="fade" class="overlay"></div>
+
+      <transition name="fade">
+        <div v-if="isConfirmModalOpen" v-on:click="isConfirmModalOpen = false" class="overlay"></div>
+      </transition>
 
       <loader :is-loading="isLoading"></loader>
     </div>
 
-    <div v-if="isConfirmModalOpen" class="modal bottom-sheet center" transition="modal">
-      <div v-if="videoToConfirm" class="modal-content">
-        <p>Who's singing</p>
+    <transition name="modal">
+      <div v-if="isConfirmModalOpen" class="modal bottom-sheet override center">
+        <div v-if="videoToConfirm" class="modal-content">
+          <p>Who's singing</p>
 
-        <h5>{{ videoToConfirm.snippet.title }}?</h5>
+          <h5>{{ videoToConfirm.snippet.title }}?</h5>
 
-        <form v-on:submit.prevent="addToQueue(videoToConfirm)">
-          <div class="input-field">
-            <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name" id="input-performer" lazy>
-            <label class="active" for="input-performer">Performer</label>
-          </div>
+          <form v-on:submit.prevent="addToQueue(videoToConfirm)">
+            <div class="input-field">
+              <input v-model="performer" v-on:focus="performer = ''" type="text" placeholder="Performer's name" id="input-performer" lazy>
+              <label class="active" for="input-performer">Performer</label>
+            </div>
 
-          <button class="btn">Ok</button>
-        </form>
+            <button class="btn">Ok</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -67,6 +71,7 @@
   });
 
   export default {
+    name: 'search',
     components: {
       'loader': loader
     },
@@ -85,9 +90,9 @@
       'db',
       'videos'
     ],
-    ready() {
+    mounted() {
       // Focus on search input
-      this.$els.searchInput.focus();
+      this.$refs['search-input'].focus();
     },
     route: {
       // Executes after transition
@@ -127,7 +132,9 @@
           }
         }, this.videos.length + 1).then(() => {
           // Redirect to queue view
-          this.$route.router.go({name: 'queue'})
+          log('search addToQueue() $router: ', this.$router);
+          log('search addToQueue() this obj: ', this);
+          this.$router.push({name: 'queue'})
 
           // Show a messsage to confirm to user that video
           // has been added
@@ -168,11 +175,13 @@
 
           this.isLoading = false;
 
-          this.$els.searchInput.blur();
+          this.$refs['search-input'].blur();
 
           // Parse search results
           // and show in Vue
           this.videosResult = JSON.parse(data).items;
+
+          log('search searchYT() results: ', this.videosResult);
         });
       }
     }

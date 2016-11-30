@@ -18,6 +18,7 @@
   import YoutubeIframeLoader from 'youtube-iframe';
 
   export default {
+    name: 'player',
     computed: {
       showPreview() {
         return !this.isPlaying && this.currentVideo;
@@ -35,17 +36,17 @@
       'db',
       'videos'
     ],
-    ready() {
+    mounted() {
       YoutubeIframeLoader.load(this.setPlayer);
     },
     watch: {
-      'videos[0]'(newVal, oldVal) {
+      currentVideo(newVal, oldVal) {
         // If player isn't ready yet, return
         if(!this.player) {
           return;
         }
 
-        var currentVideo = this.videos[0];
+        var currentVideo = this.currentVideo;
 
         var isFirstVideo = !oldVal && newVal !== oldVal;
 

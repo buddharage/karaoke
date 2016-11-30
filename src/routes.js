@@ -8,27 +8,35 @@ import player from './components/player.vue';
 
 Vue.use(VueRouter);
 
-const router = new VueRouter({
-  history: Vue.config.debug,
-  saveScrollPosition: true
-});
-
-// Redirects
-router.redirect({
-  '/': '/queue'
-});
-
-
 // Map routes
-router.map({
-  '*': {
-    component: {
-      template: '<h1>Route not found</h1>'
+const routes = [
+  {
+    path: '/',
+    redirect: {
+      name: 'queue'
     }
   },
-  '/queue': {name: 'queue', component: queue},
-  '/search': {name: 'search', component: search},
-  '/player': {name: 'player', component: player},
+  {
+    path: '/queue',
+    name: 'queue',
+    component: queue
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: search
+  },
+  {
+    path: '/player',
+    name: 'player',
+    component: player
+  },
+];
+
+const router = new VueRouter({
+  routes,
+  history: Vue.config.debug,
+  saveScrollPosition: true
 });
 
 export default router;

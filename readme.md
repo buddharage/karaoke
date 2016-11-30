@@ -49,7 +49,7 @@ var component = Vue.extend({
       }
     }
   },
-  ready() {}
+  mounted() {}
 });
 ```
 
