@@ -89,7 +89,9 @@
             'The Late Late Show with James Corden',
             'KaraokeDiamonds',
             'KaraokeOnVEVO',
-            'KARAOKEChannelIntl'
+            'KARAOKEChannelIntl',
+            'Sing2Piano | Piano Backing Tracks',
+            'PianoNest'
         ]
       }
     },
@@ -169,7 +171,7 @@
        */
       searchYT() {
         // Modify query if not on production, i.e. show non-karaoke videos
-        var query = this.$route.query.all ? this.query : this.query + ' karaoke ' + this.blockedChannelsString;
+        var query = process.env.NODE_ENV !== 'production' || this.$route.query.all ? this.query : this.query + ' karaoke ' + this.blockedChannelsString;
 
         log('search searchYT() query', query);
 

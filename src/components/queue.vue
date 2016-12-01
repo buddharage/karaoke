@@ -227,17 +227,19 @@
       align-items: center;
       display: flex;
       flex-direction: column;
-      margin: 3.6rem 0;
+      margin: 2rem 0;
 
       button {
+        align-items: center;
         display: flex;
-        jusitfy-content: center;
         margin-bottom: 1.5em;
-        max-width: 25rem;
+        max-width: 15rem;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
         width: 100%;
 
         i {
-          font-size: 1.5em;
+          font-size: 1.9em;
           margin-right: 0.6em;
         }
 
