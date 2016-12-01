@@ -5,7 +5,7 @@
         <i class="material-icons">replay</i>
       </button>
 
-      <button v-on:click.prevent="togglePlayback" class="btn-floating btn-large waves-effect waves-light pink lighten-2">
+      <button v-on:click.prevent="togglePlayback" class="btn-floating btn-large waves-effect waves-light pink lighten-2 z-depth-2">
         <i v-if="isPlaying" class="material-icons">pause</i>
         <i v-else class="material-icons">play_arrow</i>
       </button>

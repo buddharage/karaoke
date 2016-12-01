@@ -16,7 +16,9 @@
     <ul v-if="videos && videos.length" class="collection">
       <transition-group name="append">
         <li v-for="(video, index) in videos" v-on:click="openVideoModal(video)" :key="video.key" class="collection-item">
-            <span class="performer-name">{{ video.performer }}</span> - {{ video.song.title }} <i v-if="index === 0 && isPlaying" class="equalizer"></i>
+             <span class="song-name">{{ video.song.title }}</span>
+             <span class="performer-name">{{ video.performer }}</span>
+             <i v-if="index === 0 && isPlaying" class="equalizer"></i>
         </li>
       </transition-group>
     </ul>
@@ -34,8 +36,14 @@
           <h5>{{ openedVideo.song.title }}</h5>
 
           <div class="options">
-            <button v-on:click.prevent="removeVideo" class="btn red lighten-2">Remove Video</button>
-            <button v-on:click.prevent="moveVideoToNext" class="btn blue lighten-1">Play Next</button>
+            <button v-on:click.prevent="removeVideo" class="btn red darken-1">
+              <i class="material-icons">delete</i>
+              Remove Video
+            </button>
+            <button v-on:click.prevent="moveVideoToNext" class="btn blue darken-1">
+              <i class="material-icons">present_to_all</i>
+              Play Next
+            </button>
           </div>
         </div>
       </div>
@@ -188,6 +196,12 @@
       transform: none;
       transition: transform 0.5s cubic-bezier(.36,-0.64,.34,1.76);
 
+      .song-name {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 0.3em;
+      }
+
       .performer-name {
         text-transform: capitalize;
       }
@@ -216,9 +230,16 @@
       margin: 3.6rem 0;
 
       button {
-        margin-bottom: 1.6em;
+        display: flex;
+        jusitfy-content: center;
+        margin-bottom: 1.5em;
         max-width: 25rem;
         width: 100%;
+
+        i {
+          font-size: 1.5em;
+          margin-right: 0.6em;
+        }
 
         &:last-child {
           margin-bottom: 0;
@@ -267,8 +288,8 @@
   }
 
   /**
-   * Equalizer
-   */
+    * Equalizer
+    */
   $size: 90px;
 
   // When $size is 40px, $max is 14px, $width is 4px, $margin is 1px

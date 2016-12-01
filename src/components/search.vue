@@ -82,8 +82,21 @@
         videoToConfirm: null,
         query: '',
         performer: 'someone',
-        videosResult: []
+        videosResult: [],
+        blockedChannels: [
+            'Studio Group',
+            'PopUp Karaoke Instrumentals',
+            'The Late Late Show with James Corden',
+            'KaraokeDiamonds',
+            'KaraokeOnVEVO',
+            'KARAOKEChannelIntl'
+        ]
       }
+    },
+    computed: {
+        blockedChannelsString() {
+          return this.blockedChannels.map(val => `-"${val}"`).join(' ');
+        }
     },
     props: [
       'currentVideo',
@@ -156,9 +169,9 @@
        */
       searchYT() {
         // Modify query if not on production, i.e. show non-karaoke videos
-        var query = process.env.NODE_ENV !== 'production' || this.$route.query.all ? this.query : this.query + 'karaoke';
+        var query = this.$route.query.all ? this.query : this.query + ' karaoke ' + this.blockedChannelsString;
 
-        log('query all?', this.$route.query.all);
+        log('search searchYT() query', query);
 
         this.isLoading = true;
 
@@ -221,10 +234,16 @@
     display: block;
     line-height: 1.3em;
     font-size: 1.1rem;
-    font-weight: 300;
+    font-weight: 700;
     overflow: hidden;
-    text-overflow: elipsis;
-    white-space: nowrap;
     width: 100%;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .card .card-content .card-title {
+      font-size: 0.8rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 </style>
