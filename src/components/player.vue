@@ -247,6 +247,10 @@
     width: 100vw;
     z-index: 100;
 
+    &:after {
+      z-index: -1;
+    }
+
     h1, h2, h3, h4, h5 {
       font-weight: 200;
     }
@@ -281,5 +285,22 @@
     height: 100vh;
     background: black;
     width: 100vw;
+  }
+
+  .no-videos,
+  .preview {
+    &:after {
+      content: "";
+      background-image: url(/images/lydia.jpg);
+      background-color: black;
+      background-size: 100% auto;
+      opacity: 0.3;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      width: 100%;
+    }
   }
 </style>
