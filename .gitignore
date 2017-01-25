@@ -2,6 +2,7 @@
 node_modules
 *.log
 build/
+.vscode/
 public/
 config.js
 yarn.lock
