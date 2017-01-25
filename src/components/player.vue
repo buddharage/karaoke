@@ -9,7 +9,9 @@
       <div id="mainPlayer"></div>
     </div>
 
-    <h1 class="no-videos">Put some songs in!</h1>
+    <div class="no-videos">
+      <h1>Put some songs in!</h1>
+    </div>
   </div>
 </template>
 
@@ -233,6 +235,10 @@
 </script>
 
 <style lang="sass" scoped>
+  h1, h2, h3, h4, h5 {
+    font-weight: 700;
+  }
+
   .preview {
     align-items: center;
     background: black;
@@ -249,10 +255,6 @@
 
     &:after {
       z-index: -1;
-    }
-
-    h1, h2, h3, h4, h5 {
-      font-weight: 200;
     }
   }
 
@@ -289,11 +291,16 @@
 
   .no-videos,
   .preview {
-    &:after {
+    h1 {
+      position: relative;
+    }
+
+    &:before {
       content: "";
       background-image: url(/images/lydia.jpg);
       background-color: black;
       background-size: 100% auto;
+      filter: grayscale(20%);
       opacity: 0.3;
       position: absolute;
       bottom: 0;
