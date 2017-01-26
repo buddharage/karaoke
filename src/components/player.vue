@@ -10,12 +10,20 @@
     </div>
 
     <div v-show="isIdle" class="idle-player">
-      <h1>Happy birthday, Lyd!</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
       <h4>Add songs at karaoke.thaivietle.com</h4>
     </div>
 
     <div v-show="!currentVideo && !isIdle" class="no-videos">
-      <h1>Happy birthday, Lyd!</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
+      <h1>1-800-happy-birthday-lyd</h1>
       <h4>Add songs at karaoke.thaivietle.com</h4>
     </div>
   </div>
@@ -323,19 +331,30 @@
 <style lang="sass" scoped>
   h1, h2, h3, h4, h5 {
     font-weight: 500;
-    margin: 0.2em 0;
+    margin: 0.3em 0;
     position: relative;
   }
 
   .idle-player,
   .no-videos {
+    h1, h4 {
+      color: white;
+      font-family: "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosBold', "Helvetica";
+      font-style: italic;
+      font-weight: 600;
+      margin: 0;
+    }
+
     h1 {
-      font-weight: 200;
-      font-size: 10vw;
+      font-size: 6.6vw;
+      line-height: 1.2em;
+      text-transform: uppercase;
     }
 
     h4 {
-      font-size: 5.2vw;
+      color: #ba68c8;
+      font-size: 5.3vw;
+      line-height: 1.25em;
     }
   }
 
