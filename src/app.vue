@@ -118,6 +118,7 @@
   .message {
     bottom: 1rem;
     left: 50%;
+    font-size: 1.8vw;
     max-width: 80%;
     z-index: 1000;
     width: auto;
