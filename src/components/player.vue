@@ -193,7 +193,7 @@
         log('[player] onPlayerStateChange state: ', e.data);
         switch(e.data) {
           case 1: //playing
-            this.trackTime();
+            if (!this.isIdle) this.trackTime();
             break;
           case 0: //ended
             this.playNext();
