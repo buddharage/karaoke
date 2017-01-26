@@ -115,12 +115,6 @@
       /**
        * onPlaybackChange() binds the Firebase `isPlaying` value to
        * determine if player should play or pause
-       *    -1 – unstarted
-       *    0 – ended
-       *    1 – playing
-       *    2 – paused
-       *    3 – buffering
-       *    5 – video cued
        *
        * @param  {Object} snapshot  Firebase data
        */
@@ -186,6 +180,15 @@
 
         log('[player] onPlayerError() this.player info: ', this.player.getVideoData());
       },
+      /*  onPlayerStateChange()
+       *    -1 – unstarted
+       *    0 – ended
+       *    1 – playing
+       *    2 – paused
+       *    3 – buffering
+       *    5 – video cued
+       *
+       */
       onPlayerStateChange(e) {
         log('[player] onPlayerStateChange state: ', e.data);
         switch(e.data) {
