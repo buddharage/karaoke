@@ -364,7 +364,7 @@
     z-index: 100;
 
     h1 {
-      font-size: 9vw;
+      font-size: 7vw;
     }
 
     h4 {
