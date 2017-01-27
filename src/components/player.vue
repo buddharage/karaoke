@@ -20,7 +20,7 @@
 
     <transition name="zoom" appear>
       <div v-if="showPreview" class="preview">
-          <img v-if="theme === 'lydia'" class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
+          <img v-if="theme === 'lydia'" class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 22) + '.jpg'">
           <h4>{{ currentVideo.performer }} is perfoming</h4>
           <h1>{{ currentVideo.song.title }}
       </div>
@@ -29,7 +29,7 @@
     <transition name="zoom" appear>
       <div v-show="!currentVideo && !isIdle" class="no-videos">
         <div v-if="theme === 'lydia'">
-          <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
+          <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 22) + '.jpg'">
           <h1>1-800-happy-birthday-lyd</h1>
           <h1>1-800-happy-birthday-lyd</h1>
           <h1>1-800-happy-birthday-lyd</h1>

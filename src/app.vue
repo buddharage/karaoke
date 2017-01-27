@@ -205,9 +205,12 @@
     opacity: 0;
   }
 
-  .zoom-enter-active,
   .zoom-leave-active {
     transition: all 300ms ease-in;
+  }
+
+  .zoom-enter-active {
+    transition: all 300ms;
   }
 
   .zoom-enter,
