@@ -27,9 +27,10 @@ const routes = [
     component: search
   },
   {
-    path: '/player',
+    path: '/player/:theme?',
     name: 'player',
-    component: player
+    component: player,
+    props: true
   },
 ];
 

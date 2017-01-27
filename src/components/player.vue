@@ -1,21 +1,26 @@
 <template>
-  <div class="video-view">
+  <div class="video-view" v-bind:class="{ 'lydia-theme': theme === 'lydia' }">
     <div class="video-container">
       <div id="mainPlayer"></div>
     </div>
 
     <div v-show="isIdle" class="idle-player">
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h4>Add songs @ karaoke.thaivietle.com</h4>
+      <div v-if="theme === 'lydia'">
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h4>Add songs @ karaoke.thaivietle.com</h4>
+      </div>
+      <div v-else class="default-theme">
+        <h1>Put more songs in!</h1>
+      </div>
     </div>
 
     <transition name="zoom" appear>
       <div v-if="showPreview" class="preview">
-          <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
+          <img v-if="theme === 'lydia'" class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
           <h4>{{ currentVideo.performer }} is perfoming</h4>
           <h1>{{ currentVideo.song.title }}
       </div>
@@ -23,13 +28,18 @@
 
     <transition name="zoom" appear>
       <div v-show="!currentVideo && !isIdle" class="no-videos">
-        <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
-        <h1>1-800-happy-birthday-lyd</h1>
-        <h1>1-800-happy-birthday-lyd</h1>
-        <h1>1-800-happy-birthday-lyd</h1>
-        <h1>1-800-happy-birthday-lyd</h1>
-        <h1>1-800-happy-birthday-lyd</h1>
-        <h4>Add songs @ karaoke.thaivietle.com</h4>
+        <div v-if="theme === 'lydia'">
+          <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
+          <h1>1-800-happy-birthday-lyd</h1>
+          <h1>1-800-happy-birthday-lyd</h1>
+          <h1>1-800-happy-birthday-lyd</h1>
+          <h1>1-800-happy-birthday-lyd</h1>
+          <h1>1-800-happy-birthday-lyd</h1>
+          <h4>Add songs @ karaoke.thaivietle.com</h4>
+        </div>
+        <div v-else>
+          <h4>Put some songs in!</h4>
+        </div>
       </div>
     </transition>
   </div>
@@ -67,9 +77,11 @@
     props: [
       'currentVideo',
       'db',
-      'videos'
+      'videos',
+      'theme'
     ],
     mounted() {
+      console.log('[player] mounted() loading this theme: ', this.theme);
       YoutubeIframeLoader.load(this.setPlayer);
 
       // Get idle playlist length
@@ -336,8 +348,7 @@
 
 <style lang="sass" scoped>
   h1, h2, h3, h4, h5 {
-    font-weight: 500;
-    margin: 0.3em 0;
+    margin: 0.2em 0;
     position: relative;
   }
 
@@ -355,14 +366,12 @@
 
     h1, h4 {
       color: white;
-      font-family: "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosBold', "Helvetica";
-      font-style: italic;
-      font-weight: 600;
       margin: 0;
     }
 
     h1 {
       font-size: 6.6vw;
+      font-weight: 100;
       line-height: 1.2em;
       text-transform: uppercase;
     }
@@ -371,6 +380,7 @@
       color: #ba68c8;
       font-size: 5.3vw;
       line-height: 1.25em;
+      font-weight: 100;
     }
   }
 
@@ -402,12 +412,13 @@
 
     h1 {
       font-size: 7vw;
+      font-weight: 500;
     }
 
     h4 {
       color: white;
       font-size: 4.3vw;
-      font-weight: 300;
+      font-weight: 100;
     }
 
     &:after {
@@ -435,6 +446,17 @@
       right: 0;
       top: 0;
       width: 100%;
+    }
+  }
+
+  .lydia-theme {
+    .idle-player,
+    .no-videos {
+      h1, h4 {
+        font-family: "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosBold', "Helvetica";
+        font-style: italic;
+        font-weight: 600;
+      }
     }
   }
 </style>
