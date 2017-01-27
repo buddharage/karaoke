@@ -36,13 +36,11 @@
           <h5>{{ openedVideo.song.title }}</h5>
 
           <div class="options">
-            <button v-on:click.prevent="removeVideo" class="btn red darken-1">
+            <button v-on:click.prevent="removeVideo" class="btn-floating btn-largen red darken-1">
               <i class="material-icons">delete</i>
-              Remove Video
             </button>
-            <button v-on:click.prevent="moveVideoToNext" class="btn blue darken-1">
-              <i class="material-icons">present_to_all</i>
-              Play Next
+            <button v-on:click.prevent="moveVideoToNext" class="btn-text btn-floating btn-largen blue darken-1">
+              <i class="material-icons play-next">trending_flat</i>
             </button>
           </div>
         </div>
@@ -226,25 +224,45 @@
     .options {
       align-items: center;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       margin: 2rem 0;
 
       button {
         align-items: center;
         display: flex;
-        margin-bottom: 1.5em;
-        max-width: 15rem;
-        padding-left: 1.5em;
-        padding-right: 1.5em;
-        width: 100%;
+        height: 6rem;
+        justify-content: center;
+        margin: 0 1.5em;
+        width: 6rem;
 
         i {
-          font-size: 1.9em;
-          margin-right: 0.6em;
+          font-size: 2.6em;
+
+          &.play-next {
+            transform: rotate(-90deg) scale(0.8);
+            position: relative;
+            top: 0.12em;
+
+            &:before {
+              content: "";
+              border-left: 0.1em solid #fff;
+              height: 100%;
+              position: absolute;
+              right: 0.16em;
+              top: 0;
+            }
+          }
         }
 
         &:last-child {
           margin-bottom: 0;
+        }
+
+        &.btn-text {
+          font-size: 1.2rem;
+          line-height: 1.3em;
+          padding: 0 0.5em;
+          text-transform: uppercase;
         }
       }
     }
