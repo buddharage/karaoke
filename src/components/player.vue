@@ -1,6 +1,7 @@
 <template>
   <div class="video-view">
     <div v-if="showPreview" class="preview">
+        <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
         <h4>{{ currentVideo.performer }} is perfoming</h4>
         <h1>{{ currentVideo.song.title }}
     </div>
@@ -15,16 +16,17 @@
       <h1>1-800-happy-birthday-lyd</h1>
       <h1>1-800-happy-birthday-lyd</h1>
       <h1>1-800-happy-birthday-lyd</h1>
-      <h4>Add songs at karaoke.thaivietle.com</h4>
+      <h4>Add songs @ karaoke.thaivietle.com</h4>
     </div>
 
     <div v-show="!currentVideo && !isIdle" class="no-videos">
+      <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
       <h1>1-800-happy-birthday-lyd</h1>
       <h1>1-800-happy-birthday-lyd</h1>
       <h1>1-800-happy-birthday-lyd</h1>
       <h1>1-800-happy-birthday-lyd</h1>
       <h1>1-800-happy-birthday-lyd</h1>
-      <h4>Add songs at karaoke.thaivietle.com</h4>
+      <h4>Add songs @ karaoke.thaivietle.com</h4>
     </div>
   </div>
 </template>
@@ -337,6 +339,16 @@
 
   .idle-player,
   .no-videos {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+
     h1, h4 {
       color: white;
       font-family: "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosBold', "Helvetica";
@@ -359,16 +371,13 @@
   }
 
   .idle-player {
-    align-items: center;
     color: #fff;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: center;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100vw;
+  }
+
+  .no-videos {
+    background: black;
+    color: #ec407a;
+    z-index: 100;
   }
 
   .preview {
@@ -400,24 +409,6 @@
     }
   }
 
-  .no-videos {
-    align-items: center;
-    background: black;
-    display: flex;
-    color: #ec407a;
-    flex-direction: column;
-    font-weight: 200;
-    height: 100vh;
-    justify-content: center;
-    left: 0;
-    margin-top: 0;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    z-index: 100;
-    width: 100vw;
-  }
-
   .video-view {
     height: 100vh;
     background: black;
@@ -426,13 +417,12 @@
 
   .no-videos,
   .preview {
-    &:before {
+    .bg {
       content: "";
-      background-image: url(/images/lydia.jpg);
       background-color: black;
       background-size: 100% auto;
       filter: grayscale(20%);
-      opacity: 0.3;
+      opacity: 0.4;
       position: absolute;
       bottom: 0;
       left: 0;
