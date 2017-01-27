@@ -378,7 +378,7 @@
 
     h4 {
       color: #ba68c8;
-      font-size: 5.3vw;
+      font-size: 5.4vw;
       line-height: 1.25em;
       font-weight: 100;
     }
@@ -456,6 +456,10 @@
         font-family: "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosBold', "Helvetica";
         font-style: italic;
         font-weight: 600;
+      }
+
+      h4 {
+        text-transform: lowercase;
       }
     }
   }
