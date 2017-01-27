@@ -71,6 +71,11 @@
     line-height: 1em;
   }
 
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   button {
     margin: 0 3%;
