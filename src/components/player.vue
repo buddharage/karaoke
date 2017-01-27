@@ -1,11 +1,5 @@
 <template>
   <div class="video-view">
-    <div v-if="showPreview" class="preview">
-        <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
-        <h4>{{ currentVideo.performer }} is perfoming</h4>
-        <h1>{{ currentVideo.song.title }}
-    </div>
-
     <div class="video-container">
       <div id="mainPlayer"></div>
     </div>
@@ -19,15 +13,25 @@
       <h4>Add songs @ karaoke.thaivietle.com</h4>
     </div>
 
-    <div v-show="!currentVideo && !isIdle" class="no-videos">
-      <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h1>1-800-happy-birthday-lyd</h1>
-      <h4>Add songs @ karaoke.thaivietle.com</h4>
-    </div>
+    <transition name="zoom" appear>
+      <div v-if="showPreview" class="preview">
+          <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
+          <h4>{{ currentVideo.performer }} is perfoming</h4>
+          <h1>{{ currentVideo.song.title }}
+      </div>
+    </transition>
+
+    <transition name="zoom" appear>
+      <div v-show="!currentVideo && !isIdle" class="no-videos">
+        <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 10) + '.jpg'">
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h1>1-800-happy-birthday-lyd</h1>
+        <h4>Add songs @ karaoke.thaivietle.com</h4>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -388,9 +392,11 @@
     flex-direction: column;
     height: 100vh;
     justify-content: center;
+    left: 0;
     padding: 18% 3%;
     position: fixed;
     text-align: center;
+    top: 0;
     width: 100vw;
     z-index: 100;
 

@@ -204,6 +204,16 @@
     bottom: -100%;
     opacity: 0;
   }
+
+  .zoom-enter-active,
+  .zoom-leave-active {
+    transition: all 300ms ease-in;
+  }
+
+  .zoom-enter,
+  .zoom-leave-active {
+    transform: scale(1.1);
+  }
   /**
    * End Animations
    */
