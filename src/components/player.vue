@@ -20,7 +20,9 @@
 
     <transition name="zoom" appear>
       <div v-if="showPreview" class="preview">
-          <img v-if="theme === 'lydia'" class="bg" :src="'/images/lydia-' + Math.round(Math.random() * (imagesLen - 1)) + '.jpg'">
+          <div v-if="theme === 'lydia'" class="bg">
+            <img :src="'/images/lydia-' + Math.round(Math.random() * (imagesLen - 1)) + '.jpg'">
+          </div>
           <h4>{{ currentVideo.performer }} is perfoming</h4>
           <h1>{{ currentVideo.song.title }}
       </div>
@@ -29,7 +31,9 @@
     <transition name="zoom" appear>
       <div v-show="!currentVideo && !isIdle" class="no-videos">
         <div v-if="theme === 'lydia'">
-          <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * (imagesLen - 1)) + '.jpg'">
+          <div class="bg">
+            <img :src="'/images/lydia-' + Math.round(Math.random() * (imagesLen - 1)) + '.jpg'">
+          </div>
           <h1>1-800-happy-birthday-lyd</h1>
           <h1>1-800-happy-birthday-lyd</h1>
           <h1>1-800-happy-birthday-lyd</h1>
@@ -439,6 +443,7 @@
   .video-view {
     height: 100vh;
     background: black;
+    overflow: hidden;
     width: 100vw;
   }
 
@@ -450,12 +455,19 @@
       background-size: 100% auto;
       filter: grayscale(20%);
       opacity: 0.4;
+      max-height: 100vh;
+      max-width: 100vw;
+      overflow: hidden;
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       top: 0;
       width: 100%;
+
+      img {
+        width: 100%;
+      }
     }
   }
 
