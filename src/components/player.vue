@@ -20,7 +20,7 @@
 
     <transition name="zoom" appear>
       <div v-if="showPreview" class="preview">
-          <img v-if="theme === 'lydia'" class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 22) + '.jpg'">
+          <img v-if="theme === 'lydia'" class="bg" :src="'/images/lydia-' + Math.round(Math.random() * (imagesLen - 1)) + '.jpg'">
           <h4>{{ currentVideo.performer }} is perfoming</h4>
           <h1>{{ currentVideo.song.title }}
       </div>
@@ -29,7 +29,7 @@
     <transition name="zoom" appear>
       <div v-show="!currentVideo && !isIdle" class="no-videos">
         <div v-if="theme === 'lydia'">
-          <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * 22) + '.jpg'">
+          <img class="bg" :src="'/images/lydia-' + Math.round(Math.random() * (imagesLen - 1)) + '.jpg'">
           <h1>1-800-happy-birthday-lyd</h1>
           <h1>1-800-happy-birthday-lyd</h1>
           <h1>1-800-happy-birthday-lyd</h1>
@@ -71,7 +71,8 @@
         player: null,
         videoTimer: null,
         idlePlaylistId: 'PLz1B0-xw_mY43IV1JM7NaG8OVi5L052jQ',
-        idlePlaylistLength: 0
+        idlePlaylistLength: 0,
+        imagesLen: 22
       }
     },
     props: [
@@ -94,6 +95,15 @@
         }
 
         this.idlePlaylistLength = parseInt(JSON.parse(data).pageInfo.totalResults, 10);
+      });
+
+      // Preload images
+      Array.from(Array(this.imagesLen + 1)).forEach((val, i) => {
+        var tmp_img = new Image();
+
+        console.log('[player] mounted() preloading ', `/images/lydia-${i}.jpg`
+);
+        tmp_img.src = `/images/lydia-${i}.jpg`
       });
     },
     watch: {
@@ -378,7 +388,7 @@
 
     h4 {
       color: #ba68c8;
-      font-size: 5.4vw;
+      font-size: 5.38vw;
       line-height: 1.25em;
       font-weight: 100;
     }
