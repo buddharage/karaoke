@@ -129,13 +129,15 @@
     &.btn {
       background-color: rgba(0,0,0,0.6);
       border-radius: 0;
+      font-family: 'Roboto', 'Helvetica Neue', Helvetica;
+      font-weight: 500;
       height: auto;
-      line-height: 1.6em;
+      line-height: 1.3;
       padding: 1em;
       text-transform: none;
 
       &:hover {
-        background-color: rgba(255,255,255,0.6);
+        background-color: rgba(0,0,0,0.3);
       }
     }
 
