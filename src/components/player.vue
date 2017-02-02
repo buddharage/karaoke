@@ -75,6 +75,7 @@
         player: null,
         videoTimer: null,
         idlePlaylistId: 'PLz1B0-xw_mY43IV1JM7NaG8OVi5L052jQ',
+        idlePlaylistPlayed: [],
         idlePlaylistLength: 0,
         imagesLen: 22
       }
@@ -213,12 +214,12 @@
        */
       onPlayerError(e) {
         log('[player] onPlayerError() e: ', e);
+        log('[player] onPlayerError() this.player info: ', e.target.getVideoData());
 
         if ((e.data === 101 || e.data === 150) && this.isIdle) {
+          this.db.ref('errorVideos').push(e.target.getVideoData());
           this.playIdleVideo();
         }
-
-        log('[player] onPlayerError() this.player info: ', this.player.getVideoData());
       },
       /*  onPlayerStateChange()
        *    -1 – unstarted
@@ -250,11 +251,17 @@
           index: Math.floor(Math.random() * (this.idlePlaylistLength - 1))
         };
 
-        log('[player] playFiller() options', options);
+        log('[player] playIdleVideo() options', options);
 
-        this.player.loadPlaylist(options);
-
-        this.isIdle = true;
+        if (!this.idlePlaylistPlayed[options.index]) {
+          // play randomized video
+          this.player.loadPlaylist(options);
+          this.idlePlaylistPlayed[options.index] = true;
+          this.isIdle = true;
+        } else {
+          // try again
+          this.playIdleVideo();
+        }
       },
       /**
        * playNext() plays next video in queue
