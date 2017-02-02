@@ -7,8 +7,8 @@
         :videos="videos"></router-view>
     </transition>
 
-    <transition name="toast">
-      <div v-if="message" v-on:click.prevent="message = null" class="btn message pink ligthen-1">
+    <transition name="popout">
+      <div v-if="message" v-on:click.prevent="message = null" class="btn message">
         <span>{{ message }}</span>
       </div>
     </transition>
@@ -116,20 +116,27 @@
   }
 
   .message {
-    bottom: 1rem;
-    left: 50%;
-    font-size: 1.8vw;
-    max-width: 80%;
+    bottom: 2%;
+    left: 5%;
+    font-size: 5vw;
     z-index: 1000;
     width: auto;
     opacity: 1;
     position: fixed;
-    transform: translateX(-50%);
+    max-width: 90%;
+    width: 100%;
 
     &.btn {
+      background-color: rgba(0,0,0,0.6);
+      border-radius: 0;
       height: auto;
-      line-height: 1.3em;
+      line-height: 1.6em;
       padding: 1em;
+      text-transform: none;
+
+      &:hover {
+        background-color: rgba(255,255,255,0.6);
+      }
     }
 
     span {
@@ -153,6 +160,19 @@
     top: 0;
     width: 100vw;
     z-index: 999;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .message {
+      bottom: 5%;
+      font-size: 1.8vw;
+      left: 20%;
+      max-width: 60%;
+
+      &.btn {
+        border-radius: 22.5rem;
+      }
+    }
   }
 
   /**
@@ -198,11 +218,18 @@
     z-index: 99999;
   }
 
-  .toast-enter,
-  .toast-leave-active {
-    transition: all 2s ease-out;
-    bottom: -100%;
+  .popout-leave-active {
+    transition: all 600ms ease-out;
+  }
+
+  .popout-enter-active {
+    transition: all 600ms ease-in;
+  }
+
+  .popout-enter,
+  .popout-leave-active {
     opacity: 0;
+    transform: scale(0.9);
   }
 
   .zoom-leave-active {
