@@ -177,9 +177,13 @@
 
         this.isLoading = true;
 
+
+        // Youtube Data API Quota Cost: 100
+        // Note(Thai): Extra 2 units is being recorded. Don't know from where
         youtube.search().list({
-          maxResults: 10,
+          maxResults: 20,
           part: 'snippet',
+
           q: query,
           type: 'video',
           videoEmbeddable: true

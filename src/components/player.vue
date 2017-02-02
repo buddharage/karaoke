@@ -91,8 +91,9 @@
       YoutubeIframeLoader.load(this.setPlayer);
 
       // Get idle playlist length
+      // Youtube Data API Quota Cost: 1
       youtube.playlistItems().list({
-        part: 'snippet',
+        part: 'snippet', // Youtube Data API Quota Cost: 2
         playlistId: this.idlePlaylistId
       }).then((data) => {
         if(!data) {
