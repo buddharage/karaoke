@@ -11,7 +11,7 @@
         <h1>1-800-happy-birthday-lyd</h1>
         <h1>1-800-happy-birthday-lyd</h1>
         <h1>1-800-happy-birthday-lyd</h1>
-        <h4>Add songs @ karaoke.thaivietle.com</h4>
+        <h4>Add songs @ {{ domain }}</h4>
       </div>
       <div v-else class="default-theme">
         <h1>Put more songs in!</h1>
@@ -39,7 +39,7 @@
           <h1>1-800-happy-birthday-lyd</h1>
           <h1>1-800-happy-birthday-lyd</h1>
           <h1>1-800-happy-birthday-lyd</h1>
-          <h4>Add songs @ karaoke.thaivietle.com</h4>
+          <h4>Add songs @ {{ domain }}</h4>
         </div>
         <div v-else>
           <h4>Put some songs in!</h4>
@@ -70,6 +70,7 @@
     },
     data() {
       return {
+        domain: config.domain || 'karaoke.thaivietle.com',
         isIdle: false,
         isPlaying: false,
         player: null,
@@ -489,6 +490,7 @@
       }
 
       h4 {
+        font-size: 5.2vw;
         text-transform: lowercase;
       }
     }

@@ -1,4 +1,5 @@
 export default {
+  domain: '',
   googleKey: '',
   firebase: {
     apiKey: '',
