@@ -105,13 +105,14 @@
       });
 
       // Preload images
-      Array.from(Array(this.imagesLen + 1)).forEach((val, i) => {
-        var tmp_img = new Image();
+      if (this.theme === 'lydia') {
+        Array.from(Array(this.imagesLen + 1)).forEach((val, i) => {
+          var tmp_img = new Image();
 
-        console.log('[player] mounted() preloading ', `/images/lydia-${i}.jpg`
-);
-        tmp_img.src = `/images/lydia-${i}.jpg`
-      });
+          console.log('[player] mounted() preloading ', `/images/lydia-${i}.jpg`);
+          tmp_img.src = `/images/lydia-${i}.jpg`
+        });
+      }
     },
     watch: {
       currentVideo(newVal, oldVal) {
