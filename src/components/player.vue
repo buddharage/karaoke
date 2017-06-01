@@ -15,6 +15,7 @@
       </div>
       <div v-else class="default-theme">
         <h1>Put more songs in!</h1>
+        <h4>lydiathaistheknot.com</h4>
       </div>
     </div>
 
@@ -42,7 +43,8 @@
           <h4>Add songs @ {{ domain }}</h4>
         </div>
         <div v-else>
-          <h4>Put some songs in!</h4>
+          <h1>Put some songs in!</h1>
+          <h4>lydiathaistheknot.com</h4>
         </div>
       </div>
     </transition>
@@ -402,7 +404,7 @@
 
     h4 {
       color: #ba68c8;
-      font-size: 5.38vw;
+      font-size: 6.75vw;
       line-height: 1.25em;
       font-weight: 100;
     }
