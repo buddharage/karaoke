@@ -24,7 +24,7 @@
             <img :src="'/images/lydia-' + Math.round(Math.random() * (imagesLen - 1)) + '.jpg'">
           </div>
           <h4>{{ currentVideo.performer }} is perfoming</h4>
-          <h1>{{ currentVideo.song.title }}
+          <h1>{{ currentVideo.song.title }}</h1>
       </div>
     </transition>
 

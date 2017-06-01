@@ -25,7 +25,7 @@
 
     <div v-else class="no-songs center">
       <div class="no-songs-content">
-        <p>Put some songs in!<p>
+        <p>Put some songs in!</p>
         <router-link to="/search"class="btn-floating btn-large purple darken-1 z-depth-4"><i class="material-icons">playlist_add</i></router-link>
       </div>
     </div>
