@@ -183,7 +183,6 @@
         youtube.search().list({
           maxResults: 20,
           part: 'snippet',
-
           q: query,
           type: 'video',
           videoEmbeddable: true
