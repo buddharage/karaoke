@@ -15,7 +15,7 @@
       </div>
       <div v-else class="default-theme">
         <h1>Put more songs in!</h1>
-        <h4>lydiathaistheknot.com</h4>
+        <h4>{{ domain }}</h4>
       </div>
     </div>
 
@@ -44,7 +44,7 @@
         </div>
         <div v-else>
           <h1>Put some songs in!</h1>
-          <h4>lydiathaistheknot.com</h4>
+          <h4>{{ domain }}</h4>
         </div>
       </div>
     </transition>
@@ -72,7 +72,7 @@
     },
     data() {
       return {
-        domain: config.domain || 'karaoke.thaivietle.com',
+        domain: window.location.hostname,
         isIdle: false,
         isPlaying: false,
         player: null,
@@ -387,6 +387,7 @@
     justify-content: center;
     position: absolute;
     left: 0;
+    text-align: center;
     top: 0;
     width: 100vw;
 
