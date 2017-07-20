@@ -6,3 +6,4 @@ build/
 public/
 config.js
 yarn.lock
+stats.json

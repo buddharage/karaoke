@@ -73,10 +73,12 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
+        drop_console: true,
         warnings: false
       }
     }),
     new ExtractTextPlugin('[name].min.css'),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     // Usually good to put this plugin last
     new OfflinePlugin({
       publicPath: '/public/',
