@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "rm -rf public/* && webpack --progress --hide-modules --config webpack.production.js"
+    "build": "rm -rf public/* && webpack --progress --hide-modules --config webpack.production.js",
+    "deploy": "rm -rf public/* && webpack --progress --hide-modules --config webpack.production.js && firebase deploy --only hosting"
   },
   "dependencies": {
     "vue": "^2.1.10",

@@ -39,7 +39,7 @@
             <button v-on:click.prevent="removeVideo" class="btn-floating btn-largen red darken-1">
               <i class="material-icons">delete</i>
             </button>
-            <button v-on:click.prevent="moveVideoToNext" class="btn-text btn-floating btn-largen blue darken-1">
+            <button v-if="isAdmin" v-on:click.prevent="moveVideoToNext" class="btn-text btn-floating btn-largen blue darken-1">
               <i class="material-icons play-next">trending_flat</i>
             </button>
           </div>
@@ -72,6 +72,7 @@
     props: [
       'currentVideo',
       'db',
+      'isAdmin',
       'videos'
     ],
     mounted() {

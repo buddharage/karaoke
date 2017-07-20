@@ -4,6 +4,7 @@
       <router-view
         :current-video="currentVideo"
         :db="db"
+        :isAdmin="isAdmin"
         :videos="videos"></router-view>
     </transition>
 
@@ -41,6 +42,7 @@
       return {
         db: firebaseRef.database(),
         dismissMessageTimeout: null,
+        isAdmin: this.$route.query.admin,
         message: '',
         showMessage: false,
         videos: {
